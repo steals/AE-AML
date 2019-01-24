@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
+
+SERVICE_DIR="/storage/.cache/services"
+
+################################### --MAIN-- #####################################
+
+if [ $# -lt 1 ]; then
+  . /etc/profile
+
+  # get EPG
+  [ -x /usr/bin/ttv-xmltv ] && /usr/bin/ttv-xmltv full > /dev/null 2>&1
+  XMLTV_FILE=`ls /storage/ttv-xmltv/*-ttvxmltv.xml.gz 2>/dev/null`
+  [ ! -e "$XMLTV_FILE" ] && exit 1
+  zcat "$XMLTV_FILE"
+
+  # update TTV playlist
+  [ -f $SERVICE_DIR/acerun.conf ] && . $SERVICE_DIR/acerun.conf
+  [ "$ACETTV_UPD" == "1" ] && /usr/bin/ttvget-live nologo > /dev/null 2>&1
+  exit 0
+fi
+
+dflag=
+vflag=
+cflag=
+
+for a in "$@"
+do
+  [ "$a" = "-d" -o "$a" = "--description"  ] && dflag=1
+  [ "$a" = "-v" -o "$a" = "--version"      ] && vflag=1
+  [ "$a" = "-c" -o "$a" = "--capabilities" ] && cflag=1
+done
+
+if [ -n "$dflag" ]
+then
+  echo "Torrent-TV.ru API grabber"
+fi
+
+if [ -n "$vflag" ]
+then
+  echo "3.0"
+fi
+
+if [ -n "$cflag" ]
+then
+  echo "baseline"
+fi

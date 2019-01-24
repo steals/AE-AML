@@ -1,0 +1,11 @@
+diff -Naurp oscam-emu-01ffa59/CMakeLists.txt oscam-emu-01ffa59-patch/CMakeLists.txt
+--- oscam-emu-01ffa59/CMakeLists.txt	2019-01-22 18:01:16.000000000 +0200
++++ oscam-emu-01ffa59-patch/CMakeLists.txt	2019-01-22 18:06:32.000000000 +0200
+@@ -590,6 +590,7 @@ if (HAVE_PCSC)
+ if (NOT OSCamOperatingSystem MATCHES "Mac OS X")
+ if (NOT OSCamOperatingSystem MATCHES "Windows/Cygwin")
+ 	target_link_libraries (${exe_name} pcsclite)
++	target_link_libraries (${exe_name} pthread)
+ endif (NOT OSCamOperatingSystem MATCHES "Windows/Cygwin")
+ endif (NOT OSCamOperatingSystem MATCHES "Mac OS X")
+ endif (HAVE_PCSC)
