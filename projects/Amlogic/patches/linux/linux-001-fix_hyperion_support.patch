@@ -6,7 +6,7 @@ diff -Naurp linux-bcab1d4/drivers/amlogic/amports/video.c linux-bcab1d4-patch/dr
  };
  
 +struct amvideo_grabber_data {
-+	u32 canvas_index;
++	int canvas_index;
 +	u32 canvas0Addr;
 +	u32 ge2dformat;
 +	u64 size;
@@ -30,7 +30,7 @@ diff -Naurp linux-bcab1d4/drivers/amlogic/amports/video.c linux-bcab1d4-patch/dr
  				if (!ret) {
  					priv->ext_get_current = vf;
 -					put_user(canvas_index, (int __user *)argp);
-+					put_user((u32)canvas_index, (u32 __user *)argp);
++					put_user(canvas_index, (int __user *)argp);
  				}
 +				else
 +					ret = -EAGAIN;
@@ -56,7 +56,7 @@ diff -Naurp linux-bcab1d4/drivers/amlogic/amports/video.c linux-bcab1d4-patch/dr
 +
 +					priv->ext_get_current = vf;
 +
-+					grabber_data.canvas_index = (u32)canvas_index;
++					grabber_data.canvas_index = canvas_index;
 +					grabber_data.canvas0Addr = priv->ext_get_current->canvas0Addr;
 +
 +					if ((priv->ext_get_current->type & VIDTYPE_VIU_422) == VIDTYPE_VIU_422) {

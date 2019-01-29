@@ -1,15 +1,15 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2011-present AlexELEC (http://alexelec.in.ua)
 
 PKG_NAME="device-trees-amlogic"
-PKG_VERSION="97dd5ea"
-PKG_SHA256="68534f9847835fdbdfa3f0330d0ad5e0aed5b0663a7eabd0750416ae5fdacc12"
+PKG_VERSION="b047f95"
+PKG_SHA256="cd0b10549737cc89ad608ddeb3aca4f8ff6c29ea1ee541a99195eed412fac7d8"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AlexELEC/device-trees-amlogic"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="Device trees for Amlogic devices." 
+PKG_LONGDESC="Device trees for Amlogic devices."
 PKG_IS_KERNEL_PKG="yes"
 PKG_TOOLCHAIN="manual"
 

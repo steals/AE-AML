@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
+# Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
 
-. config/options
+. config/repo-options
 
 update_addons_xml() {
   echo "[*] cleanup addons ..."
@@ -87,8 +88,7 @@ upload() {
     . .work/repoconfig
   fi
   if [ -z "$RSYNC_REPO" ] ; then
-    echo "*** ERROR: \$RSYNC_REPO not set. see .work/repoconfig ***"
-    exit 0
+    RSYNC_REPO="/Data/008-GITHUB/repo"
   fi
   touch_addons_xml
   update_addons_xml

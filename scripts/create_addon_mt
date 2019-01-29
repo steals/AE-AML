@@ -32,13 +32,13 @@ DESCRIPTION
 
 EXAMPLE
        build all addons
-       > ./script/create_addon_mt all
+       > ./scripts/create_addon_mt all
 
        build audio encoders and decoders, only
-       > ./script/create_addon_mt audioencoder.* audiodecoder.*
+       > ./scripts/create_addon_mt audioencoder.* audiodecoder.*
 
        build all, but not binary
-       > ./script/create_addon_mt all -binary
+       > ./scripts/create_addon_mt all -binary
 
 EOUSAGE
   exit ${1:0}
@@ -250,6 +250,7 @@ done
 export -f pack_addon build_addon not_supported_arch not_supported_device
 . $SCRIPTS/build_mt "$addons"
 
-echo "$(print_color CLR_INFO "Built packages:") $built_list"
 echo
-echo "$(print_color CLR_WARNING "Packages not built:") $failed_list"
+echo "$(print_color CLR_BUILD "Built packages:") $built_list"
+#echo
+#echo "$(print_color CLR_WARNING "Packages not built:") $failed_list"

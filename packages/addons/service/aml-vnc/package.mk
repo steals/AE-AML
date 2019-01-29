@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2018-present CoreELEC (https://coreelec.org)
+# Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
 PKG_NAME="aml-vnc"
 PKG_VERSION="1.0"
 PKG_SHA256=""
-PKG_REV="101"
+PKG_REV="102"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/kszaq/aml-vnc"
@@ -19,7 +19,7 @@ PKG_ADDON_NAME="Amlogic VNC"
 PKG_ADDON_TYPE="xbmc.service"
 
 makeinstall_target() {
-  : # nop
+  :
 }
 
 addon() {

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
 
 import os
@@ -10,7 +10,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
-sys.path.append('/usr/share/kodi/addons/service.coreelec.settings')
+sys.path.append('/usr/share/kodi/addons/service.alexelec.settings')
 import oe
 
 __author__      = 'lrusak'

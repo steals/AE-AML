@@ -85,7 +85,7 @@ void initVncServer(int argc, char **argv) {
 	
 	assert(vncscr != NULL);
 	
-	vncscr->desktopName = "CoreELEC";
+	vncscr->desktopName = "AlexELEC";
 	vncscr->frameBuffer =(char *)vncbuf;
 	vncscr->port = VNC_PORT;
 	vncscr->kbdAddEvent = dokey;

@@ -3,8 +3,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="kodi"
-PKG_VERSION="f89de3d"
-PKG_SHA256="b3dc2e61c4717411b7e3b3888ff82721f8465928aca46512ef5ac19c828abb30"
+PKG_VERSION="454f124"
+PKG_SHA256="a037a4aaab800e01452e3ccfccf6be430ea30071d88d2d370a0be39df526bb70"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
@@ -268,11 +268,9 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/setwakeup.sh $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/share/kodi/addons
-    cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons
-    sed -e "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
-    cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
-    sed -e "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
-    cp -R $PKG_DIR/config/repository.coreelec $INSTALL/usr/share/kodi/addons/$ADDON_REPO_ID
+    cp -R $PKG_DIR/config/os.alexelec $INSTALL/usr/share/kodi/addons
+    sed -e "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.alexelec/addon.xml
+    cp -R $PKG_DIR/config/repository.alexelec $INSTALL/usr/share/kodi/addons/$ADDON_REPO_ID
     sed -e "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/$ADDON_REPO_ID/addon.xml
     sed -e "s|@ADDON_REPO_ID@|$ADDON_REPO_ID|g" -i $INSTALL/usr/share/kodi/addons/$ADDON_REPO_ID/addon.xml
     sed -e "s|@ADDON_REPO_NAME@|$ADDON_REPO_NAME|g" -i $INSTALL/usr/share/kodi/addons/$ADDON_REPO_ID/addon.xml
@@ -307,8 +305,7 @@ post_makeinstall_target() {
   ADDON_MANIFEST=$INSTALL/usr/share/kodi/system/addon-manifest.xml
   xmlstarlet ed -L -d "/addons/addon[text()='service.xbmc.versioncheck']" $ADDON_MANIFEST
   xmlstarlet ed -L -d "/addons/addon[text()='skin.estouchy']" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.libreelec.tv" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.alexelec" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "$ADDON_REPO_ID" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.alexelec.settings" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "resource.language.ru_ru" $ADDON_MANIFEST
