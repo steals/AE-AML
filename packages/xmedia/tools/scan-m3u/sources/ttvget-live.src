@@ -93,6 +93,10 @@ ace_run () {
     fi
   fi
 
+  # get xmltv EPG
+  [ -f "$ACE_DIR/ttv-xmltv-epg.conf" ] && . $ACE_DIR/ttv-xmltv-epg.conf
+  [ -x /usr/bin/ttv-xmltv -a "$ENABLE_EPG" == "yes" ] && /usr/bin/ttv-xmltv > /dev/null 2>&1
+
   STAT_NEW=`stat $JSON_FILE_GZ | grep 'Modify:'`
   if [ "$STAT_OLD" == "$STAT_NEW" ]; then
     if [ -f "$ACE_M3U" -a -f "$UPDATE_STATUS" ]; then
@@ -236,10 +240,8 @@ ace_run () {
 
   rm -f $TMP_LIST
 
-  # get logos & xmltv
+  # get channel logos
   [ -x /usr/bin/ttv-logo -a "$ARG_LOGO" != "nologo" ] && /usr/bin/ttv-logo > /dev/null 2>&1
-  [ -f "$ACE_DIR/ttv-xmltv-epg.conf" ] && . $ACE_DIR/ttv-xmltv-epg.conf
-  [ -x /usr/bin/ttv-xmltv -a "$ENABLE_EPG" == "yes" ] && /usr/bin/ttv-xmltv > /dev/null 2>&1
 
   for fpart in $(ls $PART_DIR); do
     build_m3u "$PART_DIR/$fpart" &

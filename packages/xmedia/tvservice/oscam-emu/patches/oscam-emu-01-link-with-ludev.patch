@@ -1,18 +1,18 @@
-diff -Naurp oscam-emu/CMakeLists.txt oscam-emu-patch/CMakeLists.txt
---- oscam-emu/CMakeLists.txt	2019-01-17 08:44:14.000000000 +0200
-+++ oscam-emu-patch/CMakeLists.txt	2019-01-17 08:47:43.000000000 +0200
-@@ -527,7 +527,7 @@ endif (NOT OSCamOperatingSystem MATCHES
+diff -Naurp oscam-emu-80a4352/CMakeLists.txt oscam-emu-80a4352-patch/CMakeLists.txt
+--- oscam-emu-80a4352/CMakeLists.txt	2019-02-08 09:22:53.000000000 +0200
++++ oscam-emu-80a4352-patch/CMakeLists.txt	2019-02-08 09:26:47.000000000 +0200
+@@ -517,7 +517,7 @@ add_library (${csoscam} STATIC ${csoscam
  
  set (exe_name "oscam")
- add_executable (${exe_name} ${exe_srcs} ${exe_hdrs} ${softcamkey_data})
+ add_executable (${exe_name} ${exe_srcs} ${exe_hdrs})
 -target_link_libraries (${exe_name} ${csoscam} ${csmodules} ${csreaders} csctapi cscrypt minilzo ffdecsa)
 +target_link_libraries (${exe_name} ${csoscam} ${csmodules} ${csreaders} csctapi cscrypt minilzo ffdecsa udev)
  if(HAVE_LIBRT AND HAVE_LIBUSB)
-    if (LIBUSBDIR)
- 	set (libusb_link "imp_libusb")
-diff -Naurp oscam-emu/utils/CMakeLists.txt oscam-emu-patch/utils/CMakeLists.txt
---- oscam-emu/utils/CMakeLists.txt	2019-01-17 08:44:14.000000000 +0200
-+++ oscam-emu-patch/utils/CMakeLists.txt	2019-01-17 08:48:48.000000000 +0200
+ 	if (LIBUSBDIR)
+ 		set (libusb_link "imp_libusb")
+diff -Naurp oscam-emu-80a4352/utils/CMakeLists.txt oscam-emu-80a4352-patch/utils/CMakeLists.txt
+--- oscam-emu-80a4352/utils/CMakeLists.txt	2019-02-08 09:22:53.000000000 +0200
++++ oscam-emu-80a4352-patch/utils/CMakeLists.txt	2019-02-08 09:27:23.000000000 +0200
 @@ -12,7 +12,7 @@ file (GLOB all_srcs ${exe_srcs})
  
  set (util_name "list_smargo")

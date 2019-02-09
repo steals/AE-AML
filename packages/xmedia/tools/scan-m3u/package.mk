@@ -40,4 +40,10 @@ makeinstall_target() {
     cp ttv-xmltv.src.x $INSTALL/usr/bin/ttv-xmltv
   mkdir -p $INSTALL/usr/config/acestream
     cp $PKG_DIR/config/* $INSTALL/usr/config/acestream
+
+  # youtube-dl
+  mkdir -p $INSTALL/usr/config/youtube-dl
+    cp $PKG_DIR/scripts/* $INSTALL/usr/config/youtube-dl
+    ln -sf /storage/.config/youtube-dl/youtube-play $INSTALL/usr/bin/youtube-play
+    ln -sf /storage/.config/youtube-dl/youtube-dl $INSTALL/usr/bin/youtube-dl
 }

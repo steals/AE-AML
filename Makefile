@@ -3,19 +3,13 @@ BUILD_DIRS=build.*
 all: release
 
 system:
-	./scripts/image
+	./scripts/image_mt_ae
 
 release:
-	./scripts/image_mt release
+	./scripts/image_mt_ae release
 
 image:
-	./scripts/image_mt mkimage
-
-noobs:
-	./scripts/image noobs
-
-amlpkg:
-	./scripts/image amlpkg
+	./scripts/image_mt_ae mkimage
 
 system_mt:
 	./scripts/image_mt
@@ -25,12 +19,6 @@ release_mt:
 
 image_mt:
 	./scripts/image_mt mkimage
-
-noobs_mt:
-	./scripts/image_mt noobs
-
-amlpkg_mt:
-	./scripts/image_mt amlpkg
 
 addons_mt:
 	./scripts/create_addon_mt all
