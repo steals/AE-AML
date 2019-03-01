@@ -37,7 +37,7 @@ fi
 if [ "$PROJECT" = "S805" -o "$PROJECT" = "S812" ]; then
   LIBREELEC_ARCH="$PROJECT.$DEVICE.$TARGET_ARCH"
 else
-  LIBREELEC_ARCH="${DEVICE:-$PROJECT}.$TARGET_ARCH"
+  LIBREELEC_ARCH="S9XX.$TARGET_ARCH"
 fi
 
 TARGET_VERSION="$LIBREELEC_ARCH-$LIBREELEC_VERSION"
@@ -304,7 +304,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
       THREADS="$(nproc)"
     fi
     if [ -n "$SUBDEVICES" ]; then
-      SUBDEVICES+=" ${DEVICE:-$PROJECT}"
+      SUBDEVICES+=" Generic"
       for SUBDEVICE in $SUBDEVICES;do
         # variables used in image script must be passed
         sem --no-notice -j${THREADS} env \

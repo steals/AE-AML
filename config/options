@@ -12,9 +12,6 @@ DISTRO="${DISTRO:-AlexELEC}"
 # determines PROJECT, if not forced by user
 PROJECT="${PROJECT:-Amlogic}"
 
-# determines DEVICE, if not forced by user
-DEVICE="${DEVICE:-S905}"
-
 # determines TARGET_ARCH, if not forced by user
 ARCH="${ARCH:-arm}"
 TARGET_ARCH="${ARCH}"
@@ -84,8 +81,6 @@ fi
 if [ "${OEM}" = "yes" -o "${OEM}" = "no" ]; then
   OEM_SUPPORT="${OEM}"
 fi
-
-[ -z "${_DEBUG_DEPENDS_LIST+x}" ] && set_debug_depends
 
 check_config
 

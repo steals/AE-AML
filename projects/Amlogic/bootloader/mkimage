@@ -20,6 +20,6 @@ if [ -a "$RELEASE_DIR/3rdparty/bootloader/aml_autoscript" ]; then
 fi
 
 # copy device trees to part1
-for dtb in $RELEASE_DIR/3rdparty/bootloader/device_trees $RELEASE_DIR/3rdparty/bootloader/*.dtb $RELEASE_DIR/3rdparty/bootloader/dtb.img ; do
+for dtb in $RELEASE_DIR/3rdparty/bootloader/device_trees $RELEASE_DIR/3rdparty/bootloader/*.dtb ; do
   [ -e "$dtb" ] && mcopy -s "$dtb" ::
 done

@@ -1,0 +1,48 @@
+diff -Naurp kodi-d21fed4/xbmc/windowing/Resolution.cpp kodi-d21fed4-patch/xbmc/windowing/Resolution.cpp
+--- kodi-d21fed4/xbmc/windowing/Resolution.cpp	2019-02-19 23:29:46.000000000 +0200
++++ kodi-d21fed4-patch/xbmc/windowing/Resolution.cpp	2019-02-20 11:45:03.000000000 +0200
+@@ -115,7 +115,7 @@ void CResolutionUtils::FindResolutionFro
+     if (((height == info.iScreenHeight && width <= info.iScreenWidth + 8) ||
+          (width == info.iScreenWidth && height <= info.iScreenHeight + 8)) &&
+         (info.dwFlags & D3DPRESENTFLAG_MODEMASK) == (curr.dwFlags & D3DPRESENTFLAG_MODEMASK) &&
+-        MathUtils::FloatEquals(info.fRefreshRate, fps, 0.01f))
++        MathUtils::FloatEquals(info.fRefreshRate, fps, 0.03f))
+     {
+       CLog::Log(LOGDEBUG, "Matched exact whitelisted Resolution %s (%d)", info.strMode.c_str(), i);
+       resolution = i;
+@@ -135,7 +135,7 @@ void CResolutionUtils::FindResolutionFro
+     if (((height == info.iScreenHeight && width <= info.iScreenWidth + 8) ||
+          (width == info.iScreenWidth && height <= info.iScreenHeight + 8)) &&
+         (info.dwFlags & D3DPRESENTFLAG_MODEMASK) == (curr.dwFlags & D3DPRESENTFLAG_MODEMASK) &&
+-        MathUtils::FloatEquals(info.fRefreshRate, fps * 2, 0.01f))
++        MathUtils::FloatEquals(info.fRefreshRate, fps * 2, 0.03f))
+     {
+       CLog::Log(LOGDEBUG, "Matched fuzzy whitelisted Resolution %s (%d)", info.strMode.c_str(), i);
+       resolution = i;
+@@ -147,7 +147,7 @@ void CResolutionUtils::FindResolutionFro
+ 
+   if (width <= curr.iScreenWidth
+     && height <= curr.iScreenHeight
+-    && (MathUtils::FloatEquals(curr.fRefreshRate, fps, 0.01f) || MathUtils::FloatEquals(curr.fRefreshRate, fps * 2, 0.01f)))
++    && (MathUtils::FloatEquals(curr.fRefreshRate, fps, 0.03f) || MathUtils::FloatEquals(curr.fRefreshRate, fps * 2, 0.03f)))
+   {
+     CLog::Log(LOGDEBUG, "Matched current Resolution %s (%d)", curr.strMode.c_str(), resolution);
+     return;
+@@ -165,7 +165,7 @@ void CResolutionUtils::FindResolutionFro
+     // allow resolutions that are desktop resolution but have the correct refresh rate
+     if (info.iScreenWidth == desktop_info.iScreenWidth &&
+         (info.dwFlags & D3DPRESENTFLAG_MODEMASK) == (desktop_info.dwFlags & D3DPRESENTFLAG_MODEMASK) &&
+-        MathUtils::FloatEquals(info.fRefreshRate, fps, 0.01f))
++        MathUtils::FloatEquals(info.fRefreshRate, fps, 0.03f))
+     {
+       CLog::Log(LOGDEBUG, "Matched fuzzy whitelisted Resolution %s (%d)", info.strMode.c_str(), i);
+       resolution = i;
+@@ -183,7 +183,7 @@ void CResolutionUtils::FindResolutionFro
+     // allow resolutions that are desktop resolution but have double the refresh rate
+     if (info.iScreenWidth == desktop_info.iScreenWidth &&
+         (info.dwFlags & D3DPRESENTFLAG_MODEMASK) == (desktop_info.dwFlags & D3DPRESENTFLAG_MODEMASK) &&
+-        MathUtils::FloatEquals(info.fRefreshRate, fps * 2, 0.01f))
++        MathUtils::FloatEquals(info.fRefreshRate, fps * 2, 0.03f))
+     {
+       CLog::Log(LOGDEBUG, "Matched fuzzy whitelisted Resolution %s (%d)", info.strMode.c_str(), i);
+       resolution = i;

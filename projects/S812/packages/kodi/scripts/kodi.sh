@@ -71,6 +71,22 @@ for file in $KODI_ROOT/userdata/Database/*.db; do
   fi
 done
 
+# hack for Amlogic S8xx
+display_mode=$(cat /sys/class/display/mode)
+if [ "$display_mode" != "480cvbs" -o "$display_mode" != "576cvbs" ]; then
+  display_res=$(echo $display_mode | sed 's/..hz$//')
+  display_hz=$(echo $display_mode | sed 's/[0-9]*[pi]//; s/hz//')
+
+  if [ "$display_hz" == "50" ]; then
+    echo "${display_res}60hz" > /sys/class/display/mode
+  else
+    echo "${display_res}50hz" > /sys/class/display/mode
+  fi
+
+  usleep 500
+  echo "$display_mode" > /sys/class/display/mode
+fi
+
 /usr/lib/kodi/kodi.bin $SAVED_ARGS
 RET=$?
 

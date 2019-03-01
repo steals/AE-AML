@@ -156,6 +156,8 @@ if [ ! -e /dev/boot -o ! -e /dev/system -o ! -e /dev/data -o ! -e /dev/dtb ]; th
   echo ""
   echo -e "${COL_RED}One of BOOT, SYTEM, DATA or DTB partitions is missing.${COL_RESET}"
   echo -e "${COL_BLUE}Make sure that you are using a correct device tree and a device with internal memory!${COL_RESET}"
+  echo "Not all devices are compatible with installtointernal due to unsupported NAND/eMMC"
+  echo "chips being used by some manufacturers."
   exit 0
 fi
 

@@ -3,8 +3,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="linux"
-PKG_VERSION="1b0cbb5"
-PKG_SHA256="92d38d42c270f02b778728ba65545c6748f772fb624517b9113204e06d7eb090"
+PKG_VERSION="e6b9d77"
+PKG_SHA256="4d88df6d50842e4af1994faf4f2306a972b6b391dfd85f9e0c47d5b1d9fef7ff"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AlexELEC/linux-amlogic"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
@@ -197,18 +197,7 @@ make_target() {
 }
 
 makeinstall_target() {
-    mkdir -p $INSTALL/usr/share/bootloader
-    if [ -d arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic -a -f arch/$TARGET_KERNEL_ARCH/boot/dtb.img ]; then
-      if [ "$DEVICE" != "S905" -a "$DEVICE" != "S912" ]; then
-        cp arch/$TARGET_KERNEL_ARCH/boot/dtb.img $INSTALL/usr/share/bootloader/dtb.img 2>/dev/null || :
-      fi
-    else
-      for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb arch/$TARGET_KERNEL_ARCH/boot/dts/*/*.dtb; do
-        if [ -f $dtb ]; then
-          cp -v $dtb $INSTALL/usr/share/bootloader
-        fi
-      done
-    fi
+ : # none
 }
 
 make_init() {
