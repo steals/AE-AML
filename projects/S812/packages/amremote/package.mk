@@ -16,5 +16,6 @@ makeinstall_target() {
     cp remotecfg $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/config/amremote
+    cp remotes.conf $INSTALL/usr/config/amremote/remote.conf.Multiple
     cp $PKG_DIR/config/* $INSTALL/usr/config/amremote
 }

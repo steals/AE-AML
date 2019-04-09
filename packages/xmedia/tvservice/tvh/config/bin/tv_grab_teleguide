@@ -6,7 +6,7 @@
 XMLTV_LOCATION_WEB="http://download.teleguide.info/download/new3/xmltv.xml.gz"
 
 XMLTV_DIR="/storage/.config/tvheadend/xmltv.data"
-XMLTV_FILE_GZ="$XMLTV_DIR/xmltv.xml.gz"
+XMLTV_FILE_GZ="$XMLTV_DIR/teleguide.xml.gz"
 
 ################################### --MAIN-- #####################################
 

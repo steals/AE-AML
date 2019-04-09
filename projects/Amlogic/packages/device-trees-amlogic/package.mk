@@ -19,8 +19,10 @@ make_target() {
 
   # Device trees already present in kernel tree we want to include
   EXTRA_TREES=( \
-                gxbb_p201 gxl_p212_1g gxl_p212_2g gxl_p281_1g \
-                gxm_q200_2g gxm_q201_1g gxm_q201_2g gxl_p231_1g_m8s_dvb\
+                gxbb_p200 gxbb_p200_2G gxbb_p201 \
+                gxl_p212_1g gxl_p212_2g gxl_p230_2g \
+                gxl_p231_1g_m8s_dvbs gxl_p231_1g_m8s_dvbt \
+                gxm_q200_2g gxm_q201_1g gxm_q201_2g \
 	      )
 
   # Add trees to the list

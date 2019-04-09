@@ -8,7 +8,7 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="other"
 PKG_SITE="http://www.amlogic.com"
 PKG_URL="https://github.com/codesnake/amremote/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain usbutils"
+PKG_DEPENDS_TARGET="toolchain usbutils actkbd"
 PKG_LONGDESC="amremote - IR remote configuration utility for Amlogic-based devices"
 
 makeinstall_target() {
@@ -16,5 +16,6 @@ makeinstall_target() {
     cp remotecfg $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/config/amremote
+    cp remotes.conf $INSTALL/usr/config/amremote/remote.conf.Multiple
     cp $PKG_DIR/config/* $INSTALL/usr/config/amremote
 }

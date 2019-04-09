@@ -28,6 +28,10 @@ make_target() {
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttvstream.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttv-logo.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttv-xmltv.src
+  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f tvhget-ch.src
+  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ace-search.src
+  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f playlist-cbilling.src
+  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f playlist-hbox.src
 }
 
 makeinstall_target() {
@@ -38,6 +42,10 @@ makeinstall_target() {
       ln -sf ttvstream $INSTALL/usr/bin/ttvstream-direct
     cp ttv-logo.src.x $INSTALL/usr/bin/ttv-logo
     cp ttv-xmltv.src.x $INSTALL/usr/bin/ttv-xmltv
+    cp tvhget-ch.src.x $INSTALL/usr/bin/tvhget-ch
+    cp ace-search.src.x $INSTALL/usr/bin/ace-search
+    cp playlist-cbilling.src.x $INSTALL/usr/bin/playlist-cbilling
+    cp playlist-hbox.src.x $INSTALL/usr/bin/playlist-hbox
   mkdir -p $INSTALL/usr/config/acestream
     cp $PKG_DIR/config/* $INSTALL/usr/config/acestream
 

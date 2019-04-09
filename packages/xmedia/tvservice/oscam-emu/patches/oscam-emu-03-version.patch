@@ -1,6 +1,6 @@
-diff -Naurp oscam-emu-01ffa59/CMakeLists.txt oscam-emu-01ffa59-patch/CMakeLists.txt
---- oscam-emu-01ffa59/CMakeLists.txt	2019-01-22 18:08:16.000000000 +0200
-+++ oscam-emu-01ffa59-patch/CMakeLists.txt	2019-01-22 18:11:17.000000000 +0200
+diff -Naurp oscam-emu-2ad4213/CMakeLists.txt oscam-emu-2ad4213-patch/CMakeLists.txt
+--- oscam-emu-2ad4213/CMakeLists.txt	2019-04-03 11:36:24.000000000 +0300
++++ oscam-emu-2ad4213-patch/CMakeLists.txt	2019-04-03 11:37:50.000000000 +0300
 @@ -54,8 +54,8 @@ if (CMAKE_CROSSCOMPILING)
  	elseif (OSCAM_SYSTEM_NAME MATCHES "FriendlyARM")
  		set (OSCamOperatingSystem "FriendlyARM")
@@ -12,17 +12,26 @@ diff -Naurp oscam-emu-01ffa59/CMakeLists.txt oscam-emu-01ffa59-patch/CMakeLists.
  	endif (OSCAM_SYSTEM_NAME MATCHES "Tuxbox")
  else (CMAKE_CROSSCOMPILING)
  	if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-diff -Naurp oscam-emu-01ffa59/config.sh oscam-emu-01ffa59-patch/config.sh
---- oscam-emu-01ffa59/config.sh	2019-01-22 18:08:16.000000000 +0200
-+++ oscam-emu-01ffa59-patch/config.sh	2019-01-22 18:12:13.000000000 +0200
-@@ -706,7 +706,9 @@ do
+diff -Naurp oscam-emu-2ad4213/config.sh oscam-emu-2ad4213-patch/config.sh
+--- oscam-emu-2ad4213/config.sh	2019-04-03 11:36:24.000000000 +0300
++++ oscam-emu-2ad4213-patch/config.sh	2019-04-03 11:47:25.000000000 +0300
+@@ -709,15 +709,11 @@ do
  		revision=`(svnversion -n . 2>/dev/null || printf 0) | sed 's/.*://; s/[^0-9]*$//; s/^$/0/'`
  		if [ "$revision" = "0" ]
  		then
--			which git > /dev/null 2>&1 && revision=`git describe --abbrev=0 --tags --always | sed -n -e 's/^oscam\(.*\)emu/\1/p'`
+-			which git > /dev/null 2>&1 && revision=`git log -25 --pretty=%B | grep git-svn-id | head -n 1 | sed -n -e 's/^.*trunk@\([0-9]*\) .*$/\1/p'`
+-		fi
+-		emuversion=`grep EMU_VERSION module-emulator-osemu.h | awk '{ print $3 }'`
+-		if [ -z "$emuversion" ]
+-		then
+-			echo "$revision"
+-		else
+-			echo "$revision-$emuversion"
 +			which git > /dev/null 2>&1 && cam_rev=`git log -25 --pretty=%B | grep git-svn-id | head -n 1 | sed -n -e 's/^.*trunk@\([0-9]*\) .*$/\1/p'`
 +			which git > /dev/null 2>&1 && emu_rev=`git describe --abbrev=0 --tags --always | sed -e 's/^oscam\(.*\)-//'`
 +			revision="$cam_rev-$emu_rev"
  		fi
- 		if [ -z "$revision" ]
- 		then
++		echo "$revision"
+ 		break
+ 	;;
+ 	'--emu-version')

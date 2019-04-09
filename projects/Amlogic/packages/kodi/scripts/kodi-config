@@ -66,10 +66,7 @@ else
   rm -f /var/lock/nand.lock
 fi
 
-if [ "$(uname -m)" = "aarch64" ]; then
-  echo "MALLOC_MMAP_THRESHOLD_=524288" > /run/libreelec/kodi.conf
-else
-  echo "MALLOC_MMAP_THRESHOLD_=8192" > /run/libreelec/kodi.conf
-fi
+# arm
+echo "MALLOC_MMAP_THRESHOLD_=8192" > /run/libreelec/kodi.conf
 
 [ -f /storage/.config/kodi.conf ] && cat /storage/.config/kodi.conf >> /run/libreelec/kodi.conf

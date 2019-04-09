@@ -356,6 +356,10 @@ case "$TTV_SOFT" in
       ret_msg=`/usr/bin/ttvget-direct`
       echo "$ret_msg"
       exit
+    elif [ "$TRANSLATE" == "Search-Ace" ]; then
+      ret_msg=`/usr/bin/ace-search`
+      echo "$ret_msg"
+      exit
     else
       ace_run
     fi

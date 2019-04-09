@@ -1,0 +1,142 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
+
+LOGOS_BG_COLOR="GreyB"
+LOGOS_FG_COLOR="4"
+LOGOS_TEXT_COLOR="black"
+LOGOS_CLEAR="1"
+
+SERVICE_DIR="/storage/.cache/services"
+[ -f "$SERVICE_DIR/logos.conf" ] && . $SERVICE_DIR/logos.conf
+
+TMP_DIR="/tmp/cbilling"
+TMP_DIR_LOGO="$TMP_DIR/logos_src"                           #logo temp directory
+SOURCE_DIR_LOGOS="$TMP_DIR_LOGO/logos"                      #logo source directory <logos>
+SOURCE_DIR_BACKG="$TMP_DIR_LOGO/backgrounds"                #logo source directory <backgrounds>
+BACKGROUND="$SOURCE_DIR_BACKG/bg-${LOGOS_BG_COLOR}.png"     #patch to background
+FOREGROUND="$SOURCE_DIR_BACKG/fg${LOGOS_FG_COLOR}.png"      #patch to foreground
+OUTPUT_DIR_TEMP="$SOURCE_DIR_LOGOS/tmp"
+RESIZE='220x164'
+EXTENT='268x200'
+LOGOS_DIR="/storage/picons/iptv"
+M3U_DIR="/storage/ttv-m3u"
+
+rm -rf $TMP_DIR
+mkdir -p $TMP_DIR
+
+KEY="$1"
+URL_CBL="https://cbilling.tv/playlist/${KEY}_otp_dev1.m3u8"
+curl -s -k --connect-timeout 5 --max-time 20 -o "$TMP_DIR/tmp.m3u" "$URL_CBL" 
+
+if [ ! -s "$TMP_DIR/tmp.m3u" ]; then
+  echo "Error! Can not connect to cbilling.tv by Key: $KEY"
+  exit
+fi
+
+sed -e "1d; /^#EXTGRP.*/d" -i $TMP_DIR/tmp.m3u
+
+mkdir -p $TMP_DIR_LOGO
+
+if [ -e "/storage/downloads/logos.tar.bz2" ]; then
+  cp -f /storage/downloads/logos.tar.bz2 $TMP_DIR_LOGO/logos.tar.bz2
+else
+  echo "Download logos..."
+  wget -q -t 2 -T 5 --no-check-certificate -O $TMP_DIR_LOGO/logos.tar.bz2 'https://github.com/AlexELEC/channel-logos/releases/download/v1.0/logos.tar.bz2'
+  cp -f $TMP_DIR_LOGO/logos.tar.bz2 /storage/downloads/logos.tar.bz2
+fi
+
+if [ ! -e "$TMP_DIR_LOGO/logos.tar.bz2" ]; then
+  echo "Error: not found logos file!"
+  exit
+fi
+
+echo "Unpack logos..."
+tar -jxf $TMP_DIR_LOGO/logos.tar.bz2 -C $TMP_DIR_LOGO
+
+echo "Create playlist..."
+cat $TMP_DIR/tmp.m3u |
+  while read -r LINE ; do
+    case "$LINE" in 
+      "#EXTINF:0"*)
+          CH_NAME=`echo $LINE | awk -F'",' '{print $2}' |  sed 's/://g; s/\//-/g;'`
+          IS_LOGO_FILE=`find "$TMP_DIR_LOGO/logos" -iname "$CH_NAME.png" | grep -m1 .`
+          if [ -n "$IS_LOGO_FILE" ]; then
+            LOGO_NAME=$(basename "$IS_LOGO_FILE")
+            echo "$LOGO_NAME" >> $TMP_DIR_LOGO/is-logo.list
+          else
+            LOGO_NAME="$CH_NAME.png"
+            echo "$LOGO_NAME" >> $TMP_DIR_LOGO/miss-logo.list
+          fi
+          echo "$LINE" | sed "s/^#EXTINF:0/#EXTINF:0 tvg-logo=\"\/storage\/picons\/iptv\/$LOGO_NAME\"/" >> $TMP_DIR/iptv.m3u
+      ;;
+      "http://"*)
+          echo "$LINE" >> $TMP_DIR/iptv.m3u
+      ;;
+      *)
+          continue
+      ;;
+    esac
+  done
+
+sed -i '1i#EXTM3U' $TMP_DIR/iptv.m3u
+
+mkdir -p $M3U_DIR
+cp -f $TMP_DIR/iptv.m3u $M3U_DIR/cBilling-iptv.m3u
+
+# Convert downloaded logos
+mkdir -p $LOGOS_DIR
+[ "$LOGOS_CLEAR" == "1" ] && rm -rf $LOGOS_DIR/*
+
+echo "Convertion logos..."
+cat $TMP_DIR_LOGO/is-logo.list |
+  while read -r LOGO_FILE ; do
+    target_file="$LOGOS_DIR/$LOGO_FILE"
+    if [ ! -e "$target_file" ] ; then
+      echo "Convertion logo: $target_file"
+      convert +dither -background 'transparent' -resize $RESIZE -extent $EXTENT -gravity 'center' "$SOURCE_DIR_LOGOS/$LOGO_FILE" png:- 2> /dev/null | \
+        composite - $BACKGROUND png:- 2> /dev/null | \
+        composite -compose screen -blend 50x100 $FOREGROUND - "$target_file" 2> /dev/null
+    fi
+  done
+
+# Generating the missing logos
+if [ -s "$TMP_DIR_LOGO/miss-logo.list" ]; then
+  cp -f $TMP_DIR_LOGO/miss-logo.list /tmp/cBilling-logos.missing
+  echo "Create missing logos..."
+  rm -rf $OUTPUT_DIR_TEMP
+  mkdir -p $OUTPUT_DIR_TEMP
+
+  cat $TMP_DIR_LOGO/miss-logo.list |
+    while read -r LOGO_FILE ; do
+      target_file="$LOGOS_DIR/$LOGO_FILE"
+      if [ ! -e "$target_file" ] ; then
+        echo "Create missing logo: $target_file"
+        tmp_file="$OUTPUT_DIR_TEMP/$LOGO_FILE"
+        ch_text=$(echo "$LOGO_FILE" | sed 's/\.png$//')
+
+        montage \
+            -size 268x200 \
+            -background none \
+            -gravity center \
+            -fill $LOGOS_TEXT_COLOR \
+            -font Open-Sans \
+            label:"$ch_text" +set label \
+            -shadow \
+            -background transparent \
+            -geometry +5+5 \
+            "$tmp_file" 2> /dev/null
+
+        convert +dither -background 'transparent' -resize $RESIZE -extent $EXTENT -gravity 'center' "$tmp_file" png:- 2> /dev/null | \
+            composite - $BACKGROUND png:- 2> /dev/null | \
+            composite -compose screen -blend 50x100 $FOREGROUND - "$target_file" 2> /dev/null
+      fi
+    done
+  rm -rf $OUTPUT_DIR_TEMP
+fi
+
+rm -rf $TMP_DIR
+
+echo "  Done."
+exit

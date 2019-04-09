@@ -2,10 +2,12 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="b76c81f"
-PKG_SHA256="e279026118b8029f16272f2146ec5e2b7c9c56e8ca27bb44c22fa6ce55781ac3"
+PKG_VERSION="80077b0"
+PKG_SHA256="c29b07b9b8f160ea0582b7c9c8bf11a2924b27140571e9a4eaeb108443132f64"
+PKG_REV="1"
+PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodi.tv"
+PKG_SITE="https://github.com/peak3d/inputstream.adaptive"
 PKG_URL="https://github.com/peak3d/inputstream.adaptive/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
