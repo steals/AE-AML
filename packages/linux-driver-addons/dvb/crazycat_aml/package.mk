@@ -21,6 +21,15 @@ PKG_ADDON_NAME="DVB drivers for TBS"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_VERSION="${ADDON_VERSION}.${PKG_REV}"
 
+case "$LINUX" in
+  amlogic-3.14)
+    PKG_PATCH_DIRS="amlogic-3.14"
+    ;;
+  amlogic-4.9)
+    PKG_PATCH_DIRS="amlogic-4.9"
+    ;;
+esac
+
 pre_make_target() {
   export KERNEL_VER=$(get_module_dir)
   export LDFLAGS=""
@@ -44,7 +53,6 @@ make_target() {
   sed '/CONFIG_VIDEO_S5C73M3=m/d' -i $PKG_BUILD/v4l/.config
 
   # enable AML drivers
-  echo "CONFIG_IR_MESON=m" >> $PKG_BUILD/v4l/.config
   echo "CONFIG_V4L_AMLOGIC_VIDEO=m" >> $PKG_BUILD/v4l/.config
   echo "CONFIG_VIDEOBUF_RESOURCE=m" >> $PKG_BUILD/v4l/.config
 

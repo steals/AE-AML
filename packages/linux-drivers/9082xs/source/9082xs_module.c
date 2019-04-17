@@ -19,8 +19,11 @@
  */
 #include <linux/module.h>
 #include <linux/rcupdate.h>
+#include <linux/cpu.h>
 #include <linux/preempt.h>
 #include <linux/spinlock.h>
+#include <linux/bitops.h>
+#include <linux/sched.h>
 
 /*
 Problem: Crash work driver after one-two minuts.
@@ -38,12 +41,12 @@ Problem: Crash work driver after one-two minuts.
 [   30.362058@0] [sched_delayed] sched: RT throttling activated
 [   30.367565@0] ---[ end trace 0021271de1c67728 ]---
 
-Fix: Need use one core CPU for work function queue_work_on().
+Fix: Need use online core CPU for work function queue_work_on().
 */
 
 bool Queue_work_on(int cpu, struct workqueue_struct *wq, struct work_struct *work)
 {
-	return queue_work_on(0, wq, work);
+	return queue_work_on(WORK_CPU_UNBOUND, wq, work);
 }
 
 MODULE_LICENSE("GPL");

@@ -1454,7 +1454,7 @@
 +		dev_name = "aml_newsd.0";
 +		status = "okay";
 +		reg = <0x0 0xd0070000 0x0 0x2000>;
-+		interrupts = <0x0 0xd8 0x1>;
++		interrupts = <0x0 0xd8 0x4>;
 +		pinctrl-names = "sdio_clk_cmd_pins", "sdio_all_pins";
 +		pinctrl-0 = <0x33>;
 +		pinctrl-1 = <0x34>;

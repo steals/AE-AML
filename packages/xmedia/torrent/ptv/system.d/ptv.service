@@ -1,0 +1,20 @@
+[Unit]
+Description=PazlTV IPTV channel aggregator
+Requires=network-online.target
+After=network-online.target
+Before=tvheadend.service kodi.service
+ConditionPathExists=/storage/.cache/services/ptv.conf
+
+[Service]
+ExecStart=/storage/.config/ptv3/server.py
+ExecStartPost=-/storage/.config/ptv3/serv-update.sh
+ExecStop=/bin/kill -TERM $MAINPID
+StandardOutput=file:/var/log/ptv.log
+StandardError=inherit
+TimeoutStopSec=3
+Restart=always
+RestartSec=2
+StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target
