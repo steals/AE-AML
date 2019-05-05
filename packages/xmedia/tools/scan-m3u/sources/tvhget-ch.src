@@ -96,7 +96,8 @@ mkdir -p $M3U_DIR
 # get Tags
 curl -s "$TVH_API_URL/channeltag/list"| jq -r '.entries[] | .key + " # " + .val' > $TMP_DIR/tag.list
 # get Channels
-curl -s "$TVH_API_URL/channel/grid?start=0&limit=1000" | jq -r '.entries[] | .tags[0] + " # " + .name + " # " + .icon_public_url  + " # " + .uuid' | sort -k 1,3 > $TMP_DIR/ch.list
+curl -s "$TVH_API_URL/channel/grid?start=0&limit=9999" | jq -r '.entries[] | (.number|tostring) + " -#- " + .tags[0] + " # " + .name + " # " + .icon_public_url  + " # " + .uuid' | sort -k 1 -n > $TMP_DIR/ch.list
+sed -i 's/^.* -#- //g' $TMP_DIR/ch.list
 
 split_file "$TMP_DIR/ch.list"
 

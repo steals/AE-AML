@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-2018 Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="u-boot"

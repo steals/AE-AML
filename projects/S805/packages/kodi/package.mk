@@ -4,8 +4,8 @@
 # Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
 PKG_NAME="kodi"
-PKG_VERSION="396b9d0"
-PKG_SHA256="304d9d4d1cb55956cd3deb0ea149e282ef9bc17876fee538cb50269019fb50e7"
+PKG_VERSION="a7d4df4"
+PKG_SHA256="68cbbda9f6ca1aeeaf0a4914082e5b37c51bdab14b63f3d56e3e7d66661a0261"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"

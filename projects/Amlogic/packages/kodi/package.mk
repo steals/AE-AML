@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
 PKG_NAME="kodi"
-PKG_VERSION="396b9d0"
-PKG_SHA256="304d9d4d1cb55956cd3deb0ea149e282ef9bc17876fee538cb50269019fb50e7"
+PKG_VERSION="a7d4df4"
+PKG_SHA256="68cbbda9f6ca1aeeaf0a4914082e5b37c51bdab14b63f3d56e3e7d66661a0261"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
@@ -325,6 +326,14 @@ post_makeinstall_target() {
     do
       unzip $ROOT/addons/$i -d $INSTALL/usr/share/kodi/addons
       xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "`unzip -p $ROOT/addons/$i */addon.xml | awk -F= '/addon\ id=/ { print $2 }' | awk -F'"' '{ print $2 }'`" $ADDON_MANIFEST
+    done
+  fi
+  if [ -d $PROJECT_DIR/$PROJECT/addons ]; then
+    mkdir -p $INSTALL/usr/share/kodi/addons
+    for i in `ls $PROJECT_DIR/$PROJECT/addons | grep zip`
+    do
+      unzip $PROJECT_DIR/$PROJECT/addons/$i -d $INSTALL/usr/share/kodi/addons
+      xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "`unzip -p $PROJECT_DIR/$PROJECT/addons/$i */addon.xml | awk -F= '/addon\ id=/ { print $2 }' | awk -F'"' '{ print $2 }'`" $ADDON_MANIFEST
     done
   fi
 

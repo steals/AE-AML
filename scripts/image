@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
@@ -66,7 +66,7 @@ TARGET_VERSION="$LIBREELEC_ARCH-$LIBREELEC_VERSION"
 if [ -n "$CUSTOM_IMAGE_NAME" ]; then
   IMAGE_NAME="$CUSTOM_IMAGE_NAME"
 else
-  if [ "$DEVEL_VERSION" = "devel" ] && [ -z "$CUSTOM_VERSION" ]; then
+  if [ "$DEVEL_VERSION" = "devel" ]; then
     IMAGE_NAME="$DISTRONAME-$LIBREELEC_ARCH-$OS_VERSION-$LIBREELEC_VERSION"
   else
     IMAGE_NAME="$DISTRONAME-$TARGET_VERSION"

@@ -77,7 +77,7 @@ cat $TMP_DIR/tmp.m3u |
             LOGO_NAME="$CH_NAME.png"
             echo "$LOGO_NAME" >> $TMP_DIR_LOGO/miss-logo.list
           fi
-          echo "$LINE" | sed "s/^#EXTINF:0/#EXTINF:0 tvg-logo=\"\/storage\/picons\/iptv\/$LOGO_NAME\"/" >> $TMP_DIR/sat.m3u
+          echo "$LINE" | sed "s/^#EXTINF:0/#EXTINF:0 tvg-logo=\"file:\/\/\/storage\/picons\/iptv\/$LOGO_NAME\"/" >> $TMP_DIR/sat.m3u
       ;;
       "http://"*)
           echo "$LINE" >> $TMP_DIR/sat.m3u

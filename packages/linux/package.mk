@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2017-2019 Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
@@ -25,16 +25,16 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   amlogic-3.14)
-    PKG_VERSION="aa7632313f7e9161733409909073346017ecfde8"
-    PKG_SHA256="e2e66f29c331f04688cfd6dcf134c72a49162ecafb78d05eda9dda0267017cd2"
+    PKG_VERSION="282d78c0fe54bc3250c7a50c919df2ee48eb7714"
+    PKG_SHA256="56a45dad09aba0a2964b8aa7d9f82e34da99f5c11f9d8c93efb5260422659458"
     PKG_URL="https://github.com/CoreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
     PKG_BUILD_PERF="no"
     ;;
   amlogic-4.9)
-    PKG_VERSION="87e31d963cd69c3f80899a951e77d94513528c14"
-    PKG_SHA256="fa9aa1ec39607b33a010efcd62e5c0f153efa5f98eb904013eb5b4e8da9a3765"
+    PKG_VERSION="262bac9b23f7fc245b1ce3e6cbb3e50753ef83dc"
+    PKG_SHA256="87de5cdfa169b7f641665334048622b2e8fce898d3a99609bfa46fe3befbbeb5"
     PKG_URL="https://github.com/CoreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
