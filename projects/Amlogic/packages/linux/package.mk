@@ -3,8 +3,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="linux"
-PKG_VERSION="0850821"
-PKG_SHA256="55a7bc1bf29507bda23c5403ae40cb7cce10bed3983d5083077e7e69898dc3c6"
+PKG_VERSION="2428e15"
+PKG_SHA256="b28a4d73e47699988cc3cbdf2eb4d6c17257c1856ed595d95c2830be9a501464"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AlexELEC/linux-amlogic"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"

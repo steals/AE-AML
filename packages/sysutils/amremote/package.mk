@@ -11,13 +11,13 @@ PKG_LONGDESC="amremote - IR remote configuration utility for Amlogic-based devic
 
 case "$LINUX" in
   amlogic-3.14)
-    PKG_VERSION="3693417803e660796043ea7443a1621ad146db38"
-    PKG_SHA256="8c7aadbca4d01b6f4f8997935b624b26147115c3c2dd421edcd46937ad1b6892"
+    PKG_VERSION="05b85d1f9821ae65dca250ba87b369327dd71df3"
+    PKG_SHA256="895a64efc05cee3148b4c33f5acbffb87da095d8b8f289f78e0cec26d2ed6f9d"
     PKG_URL="https://github.com/CoreELEC/amremote/archive/$PKG_VERSION.tar.gz"
     ;;
   amlogic-4.9)
-    PKG_VERSION="e3bd6f0c2e4d44428549da296b1010a1a3131a53"
-    PKG_SHA256="059fdd3d0cae30ab9c52a33fd165b02095c07aedbd3c50e5438c9de9a436b903"
+    PKG_VERSION="1db130a0ccd47f6b5c3d1dffab1e89613b796a8c"
+    PKG_SHA256="5b96f2a1dd03200909eed749f5d97d1d02ee7fc8ac92d8fce6b5d6772ee642dc"
     PKG_URL="https://github.com/CoreELEC/amremote/archive/$PKG_VERSION.tar.gz"
     ;;
 esac

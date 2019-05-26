@@ -2,9 +2,9 @@
 # Copyright (C) 2011-present AlexELEC (http://alexelec.in.ua)
 
 PKG_NAME="pvr.puzzle.tv"
-PKG_VERSION="1e6bb98"
-PKG_SHA256="e65de16e328e0dae09ebfcec3df76d6a4ddb166eb244e294d9cebcdb38b11f17"
-PKG_REV="2"
+PKG_VERSION="e3ace87"
+PKG_SHA256="65f097a06d9fb910ff754cc0b6e552a34a3b8515b93c2f5fca95f5de70d1fb97"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/srg70/pvr.puzzle.tv"

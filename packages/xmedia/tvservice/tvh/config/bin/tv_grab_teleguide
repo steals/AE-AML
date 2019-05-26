@@ -33,7 +33,7 @@ done
 
 if [ -n "$dflag" ]
 then
-  echo "Teleguide.Info grabber"
+  echo "teleguide.info"
 fi
 
 if [ -n "$vflag" ]

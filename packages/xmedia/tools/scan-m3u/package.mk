@@ -32,6 +32,7 @@ make_target() {
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ace-search.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f playlist-cbilling.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f playlist-hbox.src
+  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f tvh-stream.src
 }
 
 makeinstall_target() {
@@ -46,6 +47,7 @@ makeinstall_target() {
     cp ace-search.src.x $INSTALL/usr/bin/ace-search
     cp playlist-cbilling.src.x $INSTALL/usr/bin/playlist-cbilling
     cp playlist-hbox.src.x $INSTALL/usr/bin/playlist-hbox
+    cp tvh-stream.src.x $INSTALL/usr/bin/tvh-stream
   mkdir -p $INSTALL/usr/config/acestream
     cp $PKG_DIR/config/* $INSTALL/usr/config/acestream
 
@@ -54,4 +56,7 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/* $INSTALL/usr/config/youtube-dl
     ln -sf /storage/.config/youtube-dl/youtube-play $INSTALL/usr/bin/youtube-play
     ln -sf /storage/.config/youtube-dl/youtube-dl $INSTALL/usr/bin/youtube-dl
+
+  # tvh-stream
+  cp -a $PKG_DIR/tvh-stream $INSTALL/usr/config
 }

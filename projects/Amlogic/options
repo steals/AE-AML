@@ -149,3 +149,6 @@
   # build with entware installer
     ENTWARE_SUPPORT="yes"
     ENTWARE_ARCH="aarch64-k3.10"
+
+  # install Homebridge
+    HOMEBRIDGE_SUPPORT="no"

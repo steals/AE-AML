@@ -3,6 +3,19 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
+################################################################################
+# Colors
+ESC_SEQ="\x1b["
+COL_RESET=$ESC_SEQ"39;49;00m"
+COL_RED=$ESC_SEQ"31;01m"
+COL_GREEN=$ESC_SEQ"32;01m"
+COL_YELLOW=$ESC_SEQ"33;01m"
+COL_BLUE=$ESC_SEQ"34;01m"
+COL_MAGENTA=$ESC_SEQ"35;01m"
+COL_CYAN=$ESC_SEQ"36;01m"
+################################################################################
+
+
 LOGOS_BG_COLOR="GreyB"
 LOGOS_FG_COLOR="4"
 LOGOS_TEXT_COLOR="black"
@@ -63,6 +76,7 @@ echo "Unpack logos..."
 tar -jxf $TMP_DIR_LOGO/logos.tar.bz2 -C $TMP_DIR_LOGO
 
 echo "Create playlist..."
+LAST_CH_NAME=''
 cat $TMP_DIR/tmp.m3u |
   while read -r LINE ; do
     case "$LINE" in 
@@ -77,10 +91,16 @@ cat $TMP_DIR/tmp.m3u |
             LOGO_NAME="$CH_NAME.png"
             echo "$LOGO_NAME" >> $TMP_DIR_LOGO/miss-logo.list
           fi
-          echo "$LINE" | sed "s/^#EXTINF:0/#EXTINF:0 tvg-logo=\"file:\/\/\/storage\/picons\/iptv\/$LOGO_NAME\"/" >> $TMP_DIR/sat.m3u
+          LOGO_NAME=`echo "$LOGO_NAME" | sed 's/+/plus/g'`
+          EXTINF_STR=`echo "$LINE" | sed "s/^#EXTINF:0/#EXTINF:0 tvg-logo=\"file:\/\/\/storage\/picons\/iptv\/$LOGO_NAME\"/"`
+          echo "$EXTINF_STR" >> $TMP_DIR/sat.m3u
+          echo "$EXTINF_STR" >> $TMP_DIR/tvh.m3u
+          echo "pipe://tvh-stream $CH_NAME" >> $TMP_DIR/tvh.m3u
+          LAST_CH_NAME="$CH_NAME"
       ;;
       "http://"*)
           echo "$LINE" >> $TMP_DIR/sat.m3u
+          echo "$LAST_CH_NAME # $LINE" >> $TMP_DIR/tvh.list
       ;;
       *)
           continue
@@ -89,10 +109,13 @@ cat $TMP_DIR/tmp.m3u |
   done
 
 sed -i '1i#EXTM3U' $TMP_DIR/sat.m3u
+sed -i '1i#EXTM3U' $TMP_DIR/tvh.m3u
 cp -f $TMP_DIR_LOGO/channels.list /tmp/HelloBox-channels.name
 
 mkdir -p $M3U_DIR
 cp -f $TMP_DIR/sat.m3u $M3U_DIR/HelloBox.m3u
+cp -f $TMP_DIR/tvh.m3u $M3U_DIR/HelloBox-TVH.m3u
+cp -f $TMP_DIR/tvh.list $M3U_DIR/HelloBox-TVH.list
 
 # Convert downloaded logos
 mkdir -p $LOGOS_DIR
@@ -103,7 +126,7 @@ cat $TMP_DIR_LOGO/is-logo.list |
   while read -r LOGO_FILE ; do
     target_file="$LOGOS_DIR/$LOGO_FILE"
     if [ ! -e "$target_file" ] ; then
-      echo "Convertion logo: $target_file"
+      echo -e "${COL_YELLOW}Convertion logo: ${COL_MAGENTA}${target_file}${COL_RESET}"
       convert +dither -background 'transparent' -resize $RESIZE -extent $EXTENT -gravity 'center' "$SOURCE_DIR_LOGOS/$LOGO_FILE" png:- 2> /dev/null | \
         composite - $BACKGROUND png:- 2> /dev/null | \
         composite -compose screen -blend 50x100 $FOREGROUND - "$target_file" 2> /dev/null
@@ -121,7 +144,7 @@ if [ -s "$TMP_DIR_LOGO/miss-logo.list" ]; then
     while read -r LOGO_FILE ; do
       target_file="$LOGOS_DIR/$LOGO_FILE"
       if [ ! -e "$target_file" ] ; then
-        echo "Create missing logo: $target_file"
+        echo -e "${COL_YELLOW}Create missing logo: ${COL_MAGENTA}${target_file}${COL_RESET}"
         tmp_file="$OUTPUT_DIR_TEMP/$LOGO_FILE"
         ch_text=$(echo "$LOGO_FILE" | sed 's/\.png$//')
 
@@ -144,6 +167,22 @@ if [ -s "$TMP_DIR_LOGO/miss-logo.list" ]; then
     done
   rm -rf $OUTPUT_DIR_TEMP
 fi
+
+# rename logos
+echo "Rename logos..."
+ls $LOGOS_DIR/* > $TMP_DIR/rename.list
+
+cat $TMP_DIR/rename.list |
+  while read -r icon; do
+    case $icon in
+      *"+"*)
+        new_icon=`echo "$icon" | sed 's/+/plus/g'`
+        echo -e "${COL_YELLOW}Rename logo: ${COL_MAGENTA}${new_icon}${COL_RESET}"
+        mv -f "$icon" "$new_icon"
+      ;;
+    esac
+  done
+
 
 rm -rf $TMP_DIR
 

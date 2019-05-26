@@ -4,8 +4,8 @@
 # Copyright (C) 2011-present AlexELEC (http://alexelec.in.ua)
 
 PKG_NAME="AlexELEC-settings"
-PKG_VERSION="7f2ef23"
-#PKG_SHA256="11198260e6fd3bfce76f717ef5fe11955be05be59e9a3ffd7d96f6010c1c6953"
+PKG_VERSION="ae6e23f"
+PKG_SHA256="f007834ee3dffbb3c415d7f0883603399d2e0c46053c7553504fdd9decbbe215"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AlexELEC/service.alexelec.settings"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"

@@ -153,5 +153,8 @@
     ENTWARE_SUPPORT="yes"
     ENTWARE_ARCH="armv7sf-k3.2"
 
+  # install Homebridge
+    HOMEBRIDGE_SUPPORT="no"
+
   # build and install TVIP
     TVIP_SUPPORT="no"

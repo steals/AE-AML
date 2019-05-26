@@ -111,9 +111,9 @@ while true; do
   [ $(ls /tmp/tvh-ch/split/$patern 2>/dev/null | wc -l) -lt 1 ] && break
 done
 
+echo '#EXTM3U' > $M3U_DIR/tvh-channels.m3u
 PART_TVH=`ls $PART_DIR/*.tvh 2>/dev/null`
 if [ "$PART_TVH" != "" ]; then
-  rm -f $M3U_DIR/tvh-channels.m3u
   cat $PART_TVH >> $M3U_DIR/tvh-channels.m3u
 else
   echo "Error create TVH playlist files!"

@@ -120,17 +120,21 @@ cat $TMP_DIR/tmp.m3u |
   while read -r LINE ; do
     case "$LINE" in 
       "#EXTINF:0"*)
-          CH_NAME=`echo $LINE | awk -F'",' '{print $2}' |  sed 's/://g; s/\//-/g;'`
-          IS_LOGO_FILE=`find "$TMP_DIR_LOGO/logos" -iname "$CH_NAME.png" | grep -m1 .`
+          ORG_GRP=`echo $LINE | sed 's/^.*group-title="//; s/" parent-code.*//; s/" tvg-rec.*$//'`
+          CH_GROUP="$ORG_GRP (cbilling.tv)"
+          CH_NAME=`echo $LINE | awk -F'",' '{print $2}'`
+          CH_NAME_LOGO=`echo $CH_NAME |  sed 's/://g; s/\//-/g;'`
+          IS_LOGO_FILE=`find "$TMP_DIR_LOGO/logos" -iname "$CH_NAME_LOGO.png" | grep -m1 .`
           if [ -n "$IS_LOGO_FILE" ]; then
             LOGO_NAME=$(basename "$IS_LOGO_FILE")
             echo "$LOGO_NAME" >> $TMP_DIR_LOGO/is-logo.list
           else
-            LOGO_NAME="$CH_NAME.png"
+            LOGO_NAME="$CH_NAME_LOGO.png"
             echo "$LOGO_NAME" >> $TMP_DIR_LOGO/miss-logo.list
           fi
-          echo "$LINE" | sed "s/^#EXTINF:0/#EXTINF:0 tvg-logo=\"file:\/\/\/storage\/picons\/iptv\/$LOGO_NAME\"/" >> $TMP_DIR/iptv.m3u
-          [ "$MPTS" != "none" ] && echo "$LINE" | sed "s/^#EXTINF:0/#EXTINF:0 tvg-logo=\"file:\/\/\/storage\/picons\/iptv\/$LOGO_NAME\"/" >> $TMP_DIR/iptv-ts.m3u
+          LOGO_NAME=`echo "$LOGO_NAME" | sed 's/+/plus/g'`
+          echo "#EXTINF:0 group-title=\"${CH_GROUP}\" tvg-logo=\"file:///storage/picons/iptv/${LOGO_NAME}\",${CH_NAME}" >> $TMP_DIR/iptv.m3u
+          [ "$MPTS" != "none" ] && echo "#EXTINF:0 group-title=\"${CH_GROUP}\" tvg-logo=\"file:///storage/picons/iptv/${LOGO_NAME}\",${CH_NAME}" >> $TMP_DIR/iptv-ts.m3u
       ;;
       "http://"*)
           echo "$LINE" >> $TMP_DIR/iptv.m3u
@@ -165,7 +169,7 @@ cat $TMP_DIR_LOGO/is-logo.list |
   while read -r LOGO_FILE ; do
     target_file="$LOGOS_DIR/$LOGO_FILE"
     if [ ! -e "$target_file" ] ; then
-      echo "Convertion logo: $target_file"
+      echo -e "${COL_YELLOW}Convertion logo: ${COL_MAGENTA}${target_file}${COL_RESET}"
       convert +dither -background 'transparent' -resize $RESIZE -extent $EXTENT -gravity 'center' "$SOURCE_DIR_LOGOS/$LOGO_FILE" png:- 2> /dev/null | \
         composite - $BACKGROUND png:- 2> /dev/null | \
         composite -compose screen -blend 50x100 $FOREGROUND - "$target_file" 2> /dev/null
@@ -183,7 +187,7 @@ if [ -s "$TMP_DIR_LOGO/miss-logo.list" ]; then
     while read -r LOGO_FILE ; do
       target_file="$LOGOS_DIR/$LOGO_FILE"
       if [ ! -e "$target_file" ] ; then
-        echo "Create missing logo: $target_file"
+        echo -e "${COL_YELLOW}Create missing logo: ${COL_MAGENTA}${target_file}${COL_RESET}"
         tmp_file="$OUTPUT_DIR_TEMP/$LOGO_FILE"
         ch_text=$(echo "$LOGO_FILE" | sed 's/\.png$//')
 
@@ -207,7 +211,21 @@ if [ -s "$TMP_DIR_LOGO/miss-logo.list" ]; then
   rm -rf $OUTPUT_DIR_TEMP
 fi
 
-rm -rf $TMP_DIR
+# rename logos
+echo "Rename logos..."
+ls $LOGOS_DIR/* > $TMP_DIR/rename.list
 
+cat $TMP_DIR/rename.list |
+  while read -r icon; do
+    case $icon in
+      *"+"*)
+        new_icon=`echo "$icon" | sed 's/+/plus/g'`
+        echo -e "${COL_YELLOW}Rename logo: ${COL_MAGENTA}${new_icon}${COL_RESET}"
+        mv -f "$icon" "$new_icon"
+      ;;
+    esac
+  done
+
+rm -rf $TMP_DIR
 echo "  Done."
 exit
