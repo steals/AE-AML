@@ -15,7 +15,7 @@ PKG_LIBNAME="ppsspp_libretro.so"
 PKG_LIBPATH="lib/$PKG_LIBNAME"
 PKG_LIBVAR="PPSSPP_LIB"
 
-if [ "$PROJECT" = "Amlogic" ] || [ "$PROJECT" = "S805" ] || [ "$PROJECT" = "S812" ]; then
+if [ "$PROJECT" = "Amlogic" ] || [ "$PROJECT" = "Amlogic-dbl" ] || [ "$PROJECT" = "Amlogic-ng" ] || [ "$PROJECT" = "S805" ] || [ "$PROJECT" = "S812" ]; then
   PKG_ARCH_ARM="-DARMV7=ON \
             -DUSING_FBDEV=ON \
             -DUSING_EGL=ON \

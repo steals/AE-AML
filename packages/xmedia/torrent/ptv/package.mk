@@ -6,7 +6,7 @@ PKG_VERSION="latest"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AlexELEC/ptv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain vlc"
 PKG_LONGDESC="Pazl TV: IPTV channel aggregator."
 PKG_TOOLCHAIN="manual"
 

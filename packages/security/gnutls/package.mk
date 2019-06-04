@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2011-present AlexELEC (http://alexelec.in.ua)
 
 PKG_NAME="gnutls"
 PKG_VERSION="3.6.5"
@@ -25,6 +24,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
                            --with-included-unistring \
                            --without-p11-kit \
                            --without-tpm"
-makeinstall_target() {
-  make install DESTDIR="$INSTALL/../.INSTALL_PKG"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
 }

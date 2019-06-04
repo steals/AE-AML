@@ -36,6 +36,8 @@ fi
 
 if [ "$PROJECT" = "S805" -o "$PROJECT" = "S812" ]; then
   LIBREELEC_ARCH="$PROJECT.$DEVICE.$TARGET_ARCH"
+elif [ "$PROJECT" = "Amlogic-dbl" ]; then
+  LIBREELEC_ARCH="S9XX-DualBoot.$TARGET_ARCH"
 else
   LIBREELEC_ARCH="S9XX.$TARGET_ARCH"
 fi

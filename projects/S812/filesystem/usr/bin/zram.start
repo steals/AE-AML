@@ -22,5 +22,11 @@ if [ "$INSTALLED_MEMORY" -lt "$SYSTEM_TORAM_LIMIT" ]; then
   /usr/sbin/swapon -p 10 /dev/zram3
 fi
 
-echo 1 > /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_plug_once
-echo 2 > /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_unplug_once
+# Configure frequency scaling properties
+for policy in $(find /sys/devices/system/cpu/cpufreq -name hotplug 2>/dev/null) ; do
+  echo 1 > $policy/io_is_busy
+  echo 50 > $policy/up_threshold
+  echo 100000 > $policy/sampling_rate
+  echo 2 > $policy/cpu_num_plug_once
+  echo 2 > $policy/cpu_num_unplug_once
+done

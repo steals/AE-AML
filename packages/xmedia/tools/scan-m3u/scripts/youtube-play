@@ -7,5 +7,4 @@ BIN_TUBE="/usr/bin/youtube-dl"
 BIN_DEBUG="--quiet"
 
 eval LANG=ru_RU.utf8 LC_ALL=ru_RU.utf8 \
-  exec $BIN_TUBE $BIN_DEBUG -f 'mp4' --rm-cache-dir --no-part -o - "$1" | \
-  /usr/bin/ffmpeg -loglevel quiet -i pipe:0 -c copy -map 0 -f mpegts pipe:1
+  exec $BIN_TUBE $BIN_DEBUG -f 'best' --rm-cache-dir --no-part -o - "$1"

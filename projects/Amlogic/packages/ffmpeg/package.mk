@@ -152,6 +152,13 @@ configure_target() {
               --enable-muxer=asf \
               --enable-muxer=ipod \
               --enable-muxer=mpegts \
+              --enable-muxer=hls \
+              --enable-muxer=segment \
+              --enable-muxer=stream_segment \
+              --enable-muxer=h264 \
+              --enable-muxer=matroska \
+              --enable-muxer=mpeg2video \
+              --enable-muxer=mp4 \
               --enable-demuxers \
               --enable-parsers \
               --enable-bsfs \
