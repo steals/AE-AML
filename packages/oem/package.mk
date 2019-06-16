@@ -14,7 +14,7 @@ PKG_LONGDESC="OEM: Metapackage for various OEM packages"
 PKG_DEPENDS_TARGET+=" MC ImageMagick scan-m3u htop"
 
 # torrents
-PKG_DEPENDS_TARGET+=" acestream-aml torrserver ptv"
+PKG_DEPENDS_TARGET+=" acestream-aml torrserver ptv HTTPAceProxy"
 
 # tv services
 PKG_DEPENDS_TARGET+=" oscam-emu tvh tvh42"

@@ -12,10 +12,10 @@ diff -Naurp tvheadend-2591563/src/subscriptions.c tvheadend-2591563-patch/src/su
 +        s->ths_service->s_setsourceinfo(s->ths_service, &si_tmp);
 +        if(strstr(si_tmp.si_network, "IPTV") != NULL) {
 +          if (s->ths_channel)
-+            tvhinfo(LS_SUBSCRIPTION, "*** %04X: restarting Torrent-TV channel \"%s\" ***",
++            tvhinfo(LS_SUBSCRIPTION, "*** %04X: restarting IPTV channel \"%s\" ***",
 +                  shortid(s), channel_get_name(s->ths_channel, channel_blank_name));
 +          else
-+            tvhinfo(LS_SUBSCRIPTION, "*** %04X: restarting Torrent-TV service \"%s\" ***",
++            tvhinfo(LS_SUBSCRIPTION, "*** %04X: restarting IPTV service \"%s\" ***",
 +                  shortid(s), s->ths_service->s_nicename);
 +          s->ths_testing_error = 0;
 +          s->ths_current_instance = NULL;

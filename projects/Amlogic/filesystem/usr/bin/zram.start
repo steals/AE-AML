@@ -27,10 +27,7 @@ if [ -e /proc/device-tree/mali@d00c0000/compatible ]; then
   echo hotplug > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
   for policy in $(find /sys/devices/system/cpu/cpufreq -name hotplug 2>/dev/null) ; do
-    echo 1 > $policy/io_is_busy
-    echo 50 > $policy/up_threshold
-    echo 100000 > $policy/sampling_rate
-    echo 2 > $policy/cpu_num_plug_once
+    echo 1 > $policy/cpu_num_plug_once
     echo 2 > $policy/cpu_num_unplug_once
   done
 
