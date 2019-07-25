@@ -4,14 +4,16 @@
 # Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
 PKG_NAME="kodi"
-PKG_VERSION="0186c4b"
-PKG_SHA256="297e7143eb71c1348dbaf14b4140d835e648050496d34514fc1be5d864182ce1"
+PKG_VERSION="2e454a7"
+PKG_SHA256="636a83cf568633667c5b2a42e5699ebe7b004f258287806f788d283a4c7b45d2"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_NAME="kodi-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun libfmt lirc libfstrcmp flatbuffers:host flatbuffers"
 PKG_LONGDESC="A free and open source cross-platform media player."
+PKG_BUILD_FLAGS="+speed"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_PATCH_DIRS="$KODI_VENDOR"
 

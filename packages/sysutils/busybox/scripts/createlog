@@ -176,7 +176,9 @@ mkdir -p $BASEDIR/$LOGDIR
 
 # lock files
   mkdir -p $BASEDIR/$LOGDIR/lock
-  cp -f /run/lock/*.lock $BASEDIR/$LOGDIR/lock
+  for i in `find /run/lock/ -type f -not -name "*.tdb" -maxdepth 1`; do
+    cp -f $i $BASEDIR/$LOGDIR/lock
+  done
 
 # pack logfiles
   mkdir -p /storage/logfiles

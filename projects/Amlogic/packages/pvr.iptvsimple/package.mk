@@ -2,8 +2,8 @@
 # Copyright (C) 2011-present AlexELEC (http://alexelec.in.ua)
 
 PKG_NAME="pvr.iptvsimple"
-PKG_VERSION="3.5.7-Leia"
-PKG_SHA256="eb1a72baaf5d0a6766214eb452c8e8635ac1d917ac621a76b70d0138c63b9341"
+PKG_VERSION="3.5.8-Leia"
+PKG_SHA256="84e985b5b31044352eaf54914c266a1775f6b7c32a6ce6a46001ddb7d1f9d7fa"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

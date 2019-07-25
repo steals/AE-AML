@@ -7,6 +7,8 @@ SERVICE_DIR="/storage/.cache/services"
 TMP_DIR="/tmp/tvh-ch"
 M3U_DIR="/storage/ttv-m3u"
 PART_DIR="$TMP_DIR/split"
+TVH_STREAM_DIR="/storage/.config/tvh-stream"
+ACCESS_FILE="$TVH_STREAM_DIR/access.conf"
 
 [ -f "$SERVICE_DIR/tvip.conf" ] && . $SERVICE_DIR/tvip.conf
 
@@ -23,7 +25,13 @@ else
   fi
 fi
 
-TVH_URL="http://${URL_IP}:9981"
+if [ -s "$ACCESS_FILE" ]; then
+  ACCESS=`cat "$ACCESS_FILE"`
+  TVH_URL="http://${ACCESS}@${URL_IP}:9981"
+else
+  TVH_URL="http://${URL_IP}:9981"
+fi
+
 TVH_API_URL="$TVH_URL/api"
 
 # create M3U

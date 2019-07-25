@@ -4,14 +4,16 @@
 # Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
 PKG_NAME="kodi"
-PKG_VERSION="0186c4b"
-PKG_SHA256="297e7143eb71c1348dbaf14b4140d835e648050496d34514fc1be5d864182ce1"
+PKG_VERSION="2e454a7"
+PKG_SHA256="636a83cf568633667c5b2a42e5699ebe7b004f258287806f788d283a4c7b45d2"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_NAME="kodi-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun libfmt lirc libfstrcmp flatbuffers:host flatbuffers"
 PKG_LONGDESC="A free and open source cross-platform media player."
+PKG_BUILD_FLAGS="+speed"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_PATCH_DIRS="amlogic"
 
@@ -324,6 +326,14 @@ post_makeinstall_target() {
     do
       unzip $ROOT/addons/$i -d $INSTALL/usr/share/kodi/addons
       xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "`unzip -p $ROOT/addons/$i */addon.xml | awk -F= '/addon\ id=/ { print $2 }' | awk -F'"' '{ print $2 }'`" $ADDON_MANIFEST
+    done
+  fi
+  if [ -d $PROJECT_DIR/$PROJECT/addons ]; then
+    mkdir -p $INSTALL/usr/share/kodi/addons
+    for i in `ls $PROJECT_DIR/$PROJECT/addons | grep zip`
+    do
+      unzip $PROJECT_DIR/$PROJECT/addons/$i -d $INSTALL/usr/share/kodi/addons
+      xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "`unzip -p $PROJECT_DIR/$PROJECT/addons/$i */addon.xml | awk -F= '/addon\ id=/ { print $2 }' | awk -F'"' '{ print $2 }'`" $ADDON_MANIFEST
     done
   fi
 
