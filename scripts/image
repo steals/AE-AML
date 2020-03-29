@@ -310,6 +310,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
 
   # create md5sum's
   ( cd $RELEASE_DIR;
+    md5sum -t target/INITRD > target/INITRD.md5;
     md5sum -t target/SYSTEM > target/SYSTEM.md5;
     md5sum -t target/KERNEL > target/KERNEL.md5;
   )
@@ -549,6 +550,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
 
     # create md5sum's
     ( cd $RELEASE_DIR/${NOOBS_DISTRO}/System;
+      md5sum -t INITRD > INITRD.md5;
       md5sum -t SYSTEM > SYSTEM.md5;
       md5sum -t kernel.img > kernel.img.md5;
     )
@@ -588,4 +590,8 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
     # cleanup release dir
     rm -rf $RELEASE_DIR
   fi
+
+  # lets get rid of things we don't care about in $TARGET_IMG
+  mv $TARGET_IMG/$IMAGE_NAME.system $INSTALL/../SYSTEM
+  mv $TARGET_IMG/$IMAGE_NAME.kernel $INSTALL/../KERNEL
 fi
