@@ -131,9 +131,10 @@ EOF
   if [ -d "${RELEASE_DIR}/3rdparty/bootloader/overlays" ]; then
     mcopy -s "${RELEASE_DIR}/3rdparty/bootloader/overlays" ::
   fi
-elif [ "${BOOTLOADER}" = "u-boot" -a \( -o "${UBOOT_VERSION}" = "hardkernel" \) ]; then
+elif [ "${BOOTLOADER}" = "u-boot" -a "${UBOOT_VERSION}" = "hardkernel" ]; then
   # create bootloader configuration
   echo "image: creating bootloader configuration..."
+  echo "install hardkernel bootloader"
   if [ -f "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/bootloader/mkimage" ]; then
     . "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/bootloader/mkimage"
   elif [ -f "${PROJECT_DIR}/${PROJECT}/bootloader/mkimage" ]; then
@@ -149,6 +150,7 @@ elif [ "${BOOTLOADER}" = "u-boot" -a \( -o "${UBOOT_VERSION}" = "hardkernel" \) 
   elif [ -f "$RELEASE_DIR/3rdparty/bootloader/boot.scr" ]; then
     mcopy $RELEASE_DIR/3rdparty/bootloader/boot.scr ::
   elif [ -f "$RELEASE_DIR/3rdparty/bootloader/boot.ini" ]; then
+    echo "copy boot.init"
     mcopy $RELEASE_DIR/3rdparty/bootloader/boot.ini ::
   fi
 
