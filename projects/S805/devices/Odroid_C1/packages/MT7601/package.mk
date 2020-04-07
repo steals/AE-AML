@@ -17,13 +17,13 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="MT7601"
-PKG_VERSION="50b6c56"
+PKG_VERSION="99edfa8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 # realtek: PKG_SITE="http://www.realtek.com.tw/downloads/downloadsView.aspx?Langid=1&PFid=48&Level=5&Conn=4&ProdID=274&DownTypeID=3&GetDown=false&Downloads=true"
-PKG_SITE="https://github.com/steals/mt7601.git"
-PKG_URL="https://github.com/steals/mt7601/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="mt7601-$PKG_VERSION*"
+PKG_SITE="https://github.com/steals/mt7601usta.git"
+PKG_URL="https://github.com/steals/mt7601usta/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="mt7601usta-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
@@ -37,9 +37,9 @@ PKG_TOOLCHAIN="manual"
 
 pre_make_target() {
   unset LDFLAGS
-  sed -i '108s|.*LINUX_SRC.*|LINUX_SRC = '$(kernel_path)'|' src/Makefile
-  sed -i '109s|.*LINUX_SRC_MODULE.*|LINUX_SRC_MODULE = '$INSTALL'/'$(get_full_module_dir)'/kernel/drivers/net/wireless/|' src/Makefile
-  sed -i '110s|.*CROSS_COMPILE.*|CROSS_COMPILE = '$TOOLCHAIN'/bin/armv7a-libreelec-linux-gnueabi-|' src/Makefile
+  sed -i '122s|.*LINUX_SRC.*|LINUX_SRC = '$(kernel_path)'|' src/Makefile
+  sed -i '123s|.*LINUX_SRC_MODULE.*|LINUX_SRC_MODULE = '$INSTALL'/'$(get_full_module_dir)'/kernel/drivers/net/wireless/|' src/Makefile
+  sed -i '124s|.*CROSS_COMPILE.*|CROSS_COMPILE = '$TOOLCHAIN'/bin/armv7a-libreelec-linux-gnueabi-|' src/Makefile
 }
 
 make_target() {
