@@ -17,4 +17,4 @@ PKG_DEPENDS_TARGET+=" MC ImageMagick scan-m3u htop"
 PKG_DEPENDS_TARGET+=" acestream-aml torrserver ptv HTTPAceProxy"
 
 # tv services
-PKG_DEPENDS_TARGET+=" oscam-emu tvh tvh42"
+PKG_DEPENDS_TARGET+=" tvh tvh42"
