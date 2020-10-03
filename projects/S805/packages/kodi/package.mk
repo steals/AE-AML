@@ -4,8 +4,8 @@
 # Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
 PKG_NAME="kodi"
-PKG_VERSION="2e454a7"
-PKG_SHA256="636a83cf568633667c5b2a42e5699ebe7b004f258287806f788d283a4c7b45d2"
+PKG_VERSION="37f51f6"
+#PKG_SHA256="636a83cf568633667c5b2a42e5699ebe7b004f258287806f788d283a4c7b45d2"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
@@ -15,7 +15,7 @@ PKG_LONGDESC="A free and open source cross-platform media player."
 PKG_BUILD_FLAGS="+speed"
 PKG_TOOLCHAIN="cmake-make"
 
-PKG_PATCH_DIRS="amlogic"
+PKG_PATCH_DIRS="amlogic-3.14"
 
 configure_package() {
   # Single threaded LTO is very slow so rely on Kodi for parallel LTO support
