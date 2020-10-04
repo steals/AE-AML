@@ -29,6 +29,15 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="OEM: Metapackage for various OEM packages"
 PKG_LONGDESC="OEM: Metapackage for various OEM packages"
 
+# tools
+PKG_DEPENDS_TARGET+=" MC ImageMagick scan-m3u htop"
+
+# torrents
+PKG_DEPENDS_TARGET+=" acestream-aml torrserver ptv HTTPAceProxy"
+
+# tv services
+PKG_DEPENDS_TARGET+=" tvh tvh42"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
