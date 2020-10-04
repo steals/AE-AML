@@ -4,8 +4,8 @@
 
 PKG_NAME="ffmpeg"
 # Current branch is: release/4.0-kodi
-PKG_VERSION="4.0.3-Leia-18.2"
-PKG_SHA256="68535cc2a000946b62ce4be6edf7dda7900bd524f22bcb826800b94f4a873314"
+PKG_VERSION="4.0.4-Leia-18.4"
+PKG_SHA256="e11e7594af35f36ab2711252c3d6bb106908f26605498aef4a9be2d7bc001db2"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
@@ -38,10 +38,17 @@ else
 fi
 
 if [ "$PROJECT" = "Rockchip" ]; then
+  PKG_PATCH_DIRS+=" rkmpp"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rkmpp"
   PKG_FFMPEG_RKMPP="--enable-rkmpp --enable-libdrm --enable-version3"
 else
   PKG_FFMPEG_RKMPP="--disable-rkmpp"
+fi
+
+if [ "$PROJECT" = "Allwinner" ]; then
+  PKG_PATCH_DIRS+=" v4l2-request-api"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libdrm systemd" # systemd is needed for libudev
+  PKG_FFMPEG_V4L2_REQUEST="--enable-v4l2-request --enable-libudev --enable-libdrm"
 fi
 
 if build_with_debug; then
@@ -50,8 +57,13 @@ else
   PKG_FFMPEG_DEBUG="--disable-debug --enable-stripping"
 fi
 
-if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
+if [ "$PROJECT" = "RPi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
+  if [ "$DEVICE" = "RPi4" ]; then
+   PKG_PATCH_DIRS+=" rpi4-hevc"
+  else
+   PKG_PATCH_DIRS+=" rpi-hevc"
+ fi
 fi
 
 if target_has_feature neon; then
@@ -67,18 +79,16 @@ fi
 if target_has_feature "(neon|sse)"; then
   PKG_DEPENDS_TARGET+=" dav1d"
   PKG_FFMPEG_AV1="--enable-libdav1d"
+  PKG_NEED_UNPACK="$(get_pkg_directory dav1d) $(get_build_dir dav1d)"
 fi
 
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 
-  if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
-    CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
+  if [ "$PROJECT" = "RPi" ]; then
     PKG_FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
     PKG_FFMPEG_RPI="--enable-rpi"
-  else
-    PKG_FFMPEG_RPI="--disable-rpi"
   fi
 }
 
@@ -114,6 +124,7 @@ configure_target() {
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
+              --disable-programs \
               --enable-avdevice \
               --enable-avcodec \
               --enable-avformat \
@@ -137,6 +148,7 @@ configure_target() {
               $PKG_FFMPEG_VDPAU \
               $PKG_FFMPEG_RPI \
               $PKG_FFMPEG_RKMPP \
+              $PKG_FFMPEG_V4L2_REQUEST \
               --enable-runtime-cpudetect \
               --disable-hardcoded-tables \
               --disable-encoders \

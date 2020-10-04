@@ -1,0 +1,17 @@
+[Unit]
+Description=TVLINK IPTV channel aggregator
+Requires=network-online.target
+After=network-online.target
+Before=tvheadend.service kodi.service
+ConditionPathExists=/storage/.cache/services/tvlink.conf
+
+[Service]
+ExecStart=/storage/.config/tvlink/server.py
+ExecStop=/bin/kill -TERM $MAINPID
+TimeoutStopSec=3
+Restart=always
+RestartSec=2
+StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target

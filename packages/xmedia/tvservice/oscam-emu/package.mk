@@ -2,7 +2,7 @@
 # Copyright (C) 2011-present Alex@ELEC (http://alexelec.in.ua)
 
 PKG_NAME="oscam-emu"
-PKG_VERSION="725b1fe"
+PKG_VERSION="e8ce735"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.streamboard.tv/svn/oscam"
 PKG_URL=""

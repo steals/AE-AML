@@ -2,8 +2,8 @@
 # Copyright (C) 2011-present AlexELEC (http://alexelec.in.ua)
 
 PKG_NAME="vlc"
-PKG_VERSION="3.0.6"
-PKG_SHA256="18c16d4be0f34861d0aa51fbd274fb87f0cab3b7119757ead93f3db3a1f27ed3"
+PKG_VERSION="3.0.11.1"
+PKG_SHA256="189311d28aa814f106a7b3645211ac52c0b3e2b9f4b348de2f63bab3218086b8"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="https://download.videolan.org/pub/videolan/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"

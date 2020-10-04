@@ -4,7 +4,7 @@
 PKG_NAME="ptv"
 PKG_VERSION="latest"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/AlexELEC/ptv"
+PKG_SITE="https://github.com/AlexELEC/Puzzle4-pkg"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain vlc"
 PKG_LONGDESC="Pazl TV: IPTV channel aggregator."
