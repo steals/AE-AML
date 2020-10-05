@@ -1,0 +1,321 @@
+diff --git a/drivers/net/wireless/Kconfig b/drivers/net/wireless/Kconfig
+index 08d480423d3..5b0a49cf1de 100644
+--- a/drivers/net/wireless/Kconfig
++++ b/drivers/net/wireless/Kconfig
+@@ -281,8 +281,9 @@ source "drivers/net/wireless/libertas/Kconfig"
+ source "drivers/net/wireless/orinoco/Kconfig"
+ source "drivers/net/wireless/p54/Kconfig"
+ source "drivers/net/wireless/rt2x00/Kconfig"
+-# source "drivers/net/wireless/rtlwifi/Kconfig"
++source "drivers/net/wireless/rtlwifi/Kconfig"
+ source "drivers/net/wireless/ti/Kconfig"
+ source "drivers/net/wireless/zd1211rw/Kconfig"
+ source "drivers/net/wireless/mwifiex/Kconfig"
++
+ endif # WLAN
+diff --git a/drivers/net/wireless/Makefile b/drivers/net/wireless/Makefile
+index 07c9ec4a515..67156efe14c 100644
+--- a/drivers/net/wireless/Makefile
++++ b/drivers/net/wireless/Makefile
+@@ -24,7 +24,7 @@ obj-$(CONFIG_B43LEGACY)		+= b43legacy/
+ obj-$(CONFIG_ZD1211RW)		+= zd1211rw/
+ obj-$(CONFIG_RTL8180)		+= rtl818x/
+ obj-$(CONFIG_RTL8187)		+= rtl818x/
+-# obj-$(CONFIG_RTLWIFI)		+= rtlwifi/
++obj-$(CONFIG_RTLWIFI)		+= rtlwifi/
+ 
+ # 16-bit wireless PCMCIA client drivers
+ obj-$(CONFIG_PCMCIA_RAYCS)	+= ray_cs.o
+diff --git a/drivers/net/wireless/ath/ath5k/led.c b/drivers/net/wireless/ath/ath5k/led.c
+index 61879b1f708..f77ef36acf8 100644
+--- a/drivers/net/wireless/ath/ath5k/led.c
++++ b/drivers/net/wireless/ath/ath5k/led.c
+@@ -77,7 +77,7 @@ static DEFINE_PCI_DEVICE_TABLE(ath5k_led_devices) = {
+ 	/* HP Compaq CQ60-206US (ddreggors@jumptv.com) */
+ 	{ ATH_SDEVICE(PCI_VENDOR_ID_HP, 0x0137a), ATH_LED(3, 1) },
+ 	/* HP Compaq C700 (nitrousnrg@gmail.com) */
+-	{ ATH_SDEVICE(PCI_VENDOR_ID_HP, 0x0137b), ATH_LED(3, 0) },
++	{ ATH_SDEVICE(PCI_VENDOR_ID_HP, 0x0137b), ATH_LED(3, 1) },
+ 	/* LiteOn AR5BXB63 (magooz@salug.it) */
+ 	{ ATH_SDEVICE(PCI_VENDOR_ID_ATHEROS, 0x3067), ATH_LED(3, 0) },
+ 	/* IBM-specific AR5212 (all others) */
+diff --git a/drivers/net/wireless/ath/ath5k/mac80211-ops.c b/drivers/net/wireless/ath/ath5k/mac80211-ops.c
+index 1b8422c4ef9..06f86f43571 100644
+--- a/drivers/net/wireless/ath/ath5k/mac80211-ops.c
++++ b/drivers/net/wireless/ath/ath5k/mac80211-ops.c
+@@ -511,7 +511,8 @@ ath5k_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
+ 			break;
+ 		return -EOPNOTSUPP;
+ 	default:
+-		return -EOPNOTSUPP;
++		WARN_ON(1);
++		return -EINVAL;
+ 	}
+ 
+ 	mutex_lock(&ah->lock);
+diff --git a/drivers/net/wireless/ath/ath9k/ar9003_eeprom.h b/drivers/net/wireless/ath/ath9k/ar9003_eeprom.h
+index d83ad9df660..874f6570bd1 100644
+--- a/drivers/net/wireless/ath/ath9k/ar9003_eeprom.h
++++ b/drivers/net/wireless/ath/ath9k/ar9003_eeprom.h
+@@ -71,13 +71,13 @@
+ #define AR9300_OTP_BASE \
+ 		((AR_SREV_9340(ah) || AR_SREV_9550(ah)) ? 0x30000 : 0x14000)
+ #define AR9300_OTP_STATUS \
+-		((AR_SREV_9340(ah) || AR_SREV_9550(ah)) ? 0x31018 : 0x15f18)
++		((AR_SREV_9340(ah) || AR_SREV_9550(ah)) ? 0x30018 : 0x15f18)
+ #define AR9300_OTP_STATUS_TYPE		0x7
+ #define AR9300_OTP_STATUS_VALID		0x4
+ #define AR9300_OTP_STATUS_ACCESS_BUSY	0x2
+ #define AR9300_OTP_STATUS_SM_BUSY	0x1
+ #define AR9300_OTP_READ_DATA \
+-		((AR_SREV_9340(ah) || AR_SREV_9550(ah)) ? 0x3101c : 0x15f1c)
++		((AR_SREV_9340(ah) || AR_SREV_9550(ah)) ? 0x3001c : 0x15f1c)
+ 
+ enum targetPowerHTRates {
+ 	HT_TARGET_RATE_0_8_16,
+diff --git a/drivers/net/wireless/ath/ath9k/eeprom.c b/drivers/net/wireless/ath/ath9k/eeprom.c
+index 2ac05486424..971d770722c 100644
+--- a/drivers/net/wireless/ath/ath9k/eeprom.c
++++ b/drivers/net/wireless/ath/ath9k/eeprom.c
+@@ -408,9 +408,10 @@ void ath9k_hw_get_gain_boundaries_pdadcs(struct ath_hw *ah,
+ 
+ 	if (match) {
+ 		if (AR_SREV_9287(ah)) {
++			/* FIXME: array overrun? */
+ 			for (i = 0; i < numXpdGains; i++) {
+ 				minPwrT4[i] = data_9287[idxL].pwrPdg[i][0];
+-				maxPwrT4[i] = data_9287[idxL].pwrPdg[i][intercepts - 1];
++				maxPwrT4[i] = data_9287[idxL].pwrPdg[i][4];
+ 				ath9k_hw_fill_vpd_table(minPwrT4[i], maxPwrT4[i],
+ 						data_9287[idxL].pwrPdg[i],
+ 						data_9287[idxL].vpdPdg[i],
+@@ -420,7 +421,7 @@ void ath9k_hw_get_gain_boundaries_pdadcs(struct ath_hw *ah,
+ 		} else if (eeprom_4k) {
+ 			for (i = 0; i < numXpdGains; i++) {
+ 				minPwrT4[i] = data_4k[idxL].pwrPdg[i][0];
+-				maxPwrT4[i] = data_4k[idxL].pwrPdg[i][intercepts - 1];
++				maxPwrT4[i] = data_4k[idxL].pwrPdg[i][4];
+ 				ath9k_hw_fill_vpd_table(minPwrT4[i], maxPwrT4[i],
+ 						data_4k[idxL].pwrPdg[i],
+ 						data_4k[idxL].vpdPdg[i],
+@@ -430,7 +431,7 @@ void ath9k_hw_get_gain_boundaries_pdadcs(struct ath_hw *ah,
+ 		} else {
+ 			for (i = 0; i < numXpdGains; i++) {
+ 				minPwrT4[i] = data_def[idxL].pwrPdg[i][0];
+-				maxPwrT4[i] = data_def[idxL].pwrPdg[i][intercepts - 1];
++				maxPwrT4[i] = data_def[idxL].pwrPdg[i][4];
+ 				ath9k_hw_fill_vpd_table(minPwrT4[i], maxPwrT4[i],
+ 						data_def[idxL].pwrPdg[i],
+ 						data_def[idxL].vpdPdg[i],
+diff --git a/drivers/net/wireless/brcm80211/Kconfig b/drivers/net/wireless/brcm80211/Kconfig
+index ab8e680cf10..fc8a0fa6d3b 100644
+--- a/drivers/net/wireless/brcm80211/Kconfig
++++ b/drivers/net/wireless/brcm80211/Kconfig
+@@ -6,6 +6,7 @@ config BRCMSMAC
+ 	depends on MAC80211
+ 	depends on BCMA
+ 	select BRCMUTIL
++	select FW_LOADER
+ 	select CRC_CCITT
+ 	select CRC8
+ 	select CORDIC
+diff --git a/drivers/net/wireless/brcm80211/brcmfmac/wl_cfg80211.c b/drivers/net/wireless/brcm80211/brcmfmac/wl_cfg80211.c
+index 2c524305589..301e572e892 100644
+--- a/drivers/net/wireless/brcm80211/brcmfmac/wl_cfg80211.c
++++ b/drivers/net/wireless/brcm80211/brcmfmac/wl_cfg80211.c
+@@ -3726,7 +3726,7 @@ brcmf_cfg80211_start_ap(struct wiphy *wiphy, struct net_device *ndev,
+ 				(u8 *)&settings->beacon.head[ie_offset],
+ 				settings->beacon.head_len - ie_offset,
+ 				WLAN_EID_SSID);
+-		if (!ssid_ie || ssid_ie->len > IEEE80211_MAX_SSID_LEN)
++		if (!ssid_ie)
+ 			return -EINVAL;
+ 
+ 		memcpy(ssid_le.SSID, ssid_ie->data, ssid_ie->len);
+diff --git a/drivers/net/wireless/brcm80211/brcmsmac/dma.c b/drivers/net/wireless/brcm80211/brcmsmac/dma.c
+index 7660b523dcf..4fb9635d391 100644
+--- a/drivers/net/wireless/brcm80211/brcmsmac/dma.c
++++ b/drivers/net/wireless/brcm80211/brcmsmac/dma.c
+@@ -1079,10 +1079,8 @@ bool dma_rxfill(struct dma_pub *pub)
+ 
+ 		pa = dma_map_single(di->dmadev, p->data, di->rxbufsize,
+ 				    DMA_FROM_DEVICE);
+-		if (dma_mapping_error(di->dmadev, pa)) {
+-			brcmu_pkt_buf_free_skb(p);
++		if (dma_mapping_error(di->dmadev, pa))
+ 			return false;
+-		}
+ 
+ 		/* save the free packet pointer */
+ 		di->rxp[rxout] = p;
+diff --git a/drivers/net/wireless/brcm80211/brcmsmac/stf.c b/drivers/net/wireless/brcm80211/brcmsmac/stf.c
+index 0ab865de149..dd916272249 100644
+--- a/drivers/net/wireless/brcm80211/brcmsmac/stf.c
++++ b/drivers/net/wireless/brcm80211/brcmsmac/stf.c
+@@ -87,7 +87,7 @@ void
+ brcms_c_stf_ss_algo_channel_get(struct brcms_c_info *wlc, u16 *ss_algo_channel,
+ 			    u16 chanspec)
+ {
+-	struct tx_power power = { };
++	struct tx_power power;
+ 	u8 siso_mcs_id, cdd_mcs_id, stbc_mcs_id;
+ 
+ 	/* Clear previous settings */
+diff --git a/drivers/net/wireless/hostap/hostap_hw.c b/drivers/net/wireless/hostap/hostap_hw.c
+index f8639003da9..6307a4e36c8 100644
+--- a/drivers/net/wireless/hostap/hostap_hw.c
++++ b/drivers/net/wireless/hostap/hostap_hw.c
+@@ -836,30 +836,25 @@ static int hfa384x_get_rid(struct net_device *dev, u16 rid, void *buf, int len,
+ 	spin_lock_bh(&local->baplock);
+ 
+ 	res = hfa384x_setup_bap(dev, BAP0, rid, 0);
+-	if (res)
+-		goto unlock;
+-
+-	res = hfa384x_from_bap(dev, BAP0, &rec, sizeof(rec));
+-	if (res)
+-		goto unlock;
++	if (!res)
++		res = hfa384x_from_bap(dev, BAP0, &rec, sizeof(rec));
+ 
+ 	if (le16_to_cpu(rec.len) == 0) {
+ 		/* RID not available */
+ 		res = -ENODATA;
+-		goto unlock;
+ 	}
+ 
+ 	rlen = (le16_to_cpu(rec.len) - 1) * 2;
+-	if (exact_len && rlen != len) {
++	if (!res && exact_len && rlen != len) {
+ 		printk(KERN_DEBUG "%s: hfa384x_get_rid - RID len mismatch: "
+ 		       "rid=0x%04x, len=%d (expected %d)\n",
+ 		       dev->name, rid, rlen, len);
+ 		res = -ENODATA;
+ 	}
+ 
+-	res = hfa384x_from_bap(dev, BAP0, buf, len);
++	if (!res)
++		res = hfa384x_from_bap(dev, BAP0, buf, len);
+ 
+-unlock:
+ 	spin_unlock_bh(&local->baplock);
+ 	mutex_unlock(&local->rid_bap_mtx);
+ 
+diff --git a/drivers/net/wireless/iwlwifi/pcie/tx.c b/drivers/net/wireless/iwlwifi/pcie/tx.c
+index 2e3a0d73f09..f05962c3249 100644
+--- a/drivers/net/wireless/iwlwifi/pcie/tx.c
++++ b/drivers/net/wireless/iwlwifi/pcie/tx.c
+@@ -1311,9 +1311,9 @@ static int iwl_pcie_enqueue_hcmd(struct iwl_trans *trans,
+ 
+ 	/* start the TFD with the scratchbuf */
+ 	scratch_size = min_t(int, copy_size, IWL_HCMD_SCRATCHBUF_SIZE);
+-	memcpy(&txq->scratchbufs[idx], &out_cmd->hdr, scratch_size);
++	memcpy(&txq->scratchbufs[q->write_ptr], &out_cmd->hdr, scratch_size);
+ 	iwl_pcie_txq_build_tfd(trans, txq,
+-			       iwl_pcie_get_scratchbuf_dma(txq, idx),
++			       iwl_pcie_get_scratchbuf_dma(txq, q->write_ptr),
+ 			       scratch_size, 1);
+ 
+ 	/* map first command fragment, if any remains */
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index 735c2662038..cb34c7895f2 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -1931,7 +1931,6 @@ static int hwsim_tx_info_frame_received_nl(struct sk_buff *skb_2,
+ 	if (!info->attrs[HWSIM_ATTR_ADDR_TRANSMITTER] ||
+ 	   !info->attrs[HWSIM_ATTR_FLAGS] ||
+ 	   !info->attrs[HWSIM_ATTR_COOKIE] ||
+-	   !info->attrs[HWSIM_ATTR_SIGNAL] ||
+ 	   !info->attrs[HWSIM_ATTR_TX_INFO])
+ 		goto out;
+ 
+diff --git a/drivers/net/wireless/mwifiex/cfg80211.c b/drivers/net/wireless/mwifiex/cfg80211.c
+index fa0e45b82ce..e7f7cdfafd5 100644
+--- a/drivers/net/wireless/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/mwifiex/cfg80211.c
+@@ -1633,9 +1633,8 @@ done:
+ 			is_scanning_required = 1;
+ 		} else {
+ 			dev_dbg(priv->adapter->dev,
+-				"info: trying to associate to '%.*s' bssid %pM\n",
+-				req_ssid.ssid_len, (char *)req_ssid.ssid,
+-				bss->bssid);
++				"info: trying to associate to '%s' bssid %pM\n",
++				(char *) req_ssid.ssid, bss->bssid);
+ 			memcpy(&priv->cfg_bssid, bss->bssid, ETH_ALEN);
+ 			break;
+ 		}
+@@ -1676,8 +1675,8 @@ mwifiex_cfg80211_connect(struct wiphy *wiphy, struct net_device *dev,
+ 		return -EINVAL;
+ 	}
+ 
+-	wiphy_dbg(wiphy, "info: Trying to associate to %.*s and bssid %pM\n",
+-		  (int)sme->ssid_len, (char *)sme->ssid, sme->bssid);
++	wiphy_dbg(wiphy, "info: Trying to associate to %s and bssid %pM\n",
++		  (char *) sme->ssid, sme->bssid);
+ 
+ 	ret = mwifiex_cfg80211_assoc(priv, sme->ssid_len, sme->ssid, sme->bssid,
+ 				     priv->bss_mode, sme->channel, sme, 0);
+@@ -1800,8 +1799,8 @@ mwifiex_cfg80211_join_ibss(struct wiphy *wiphy, struct net_device *dev,
+ 		goto done;
+ 	}
+ 
+-	wiphy_dbg(wiphy, "info: trying to join to %.*s and bssid %pM\n",
+-		  params->ssid_len, (char *)params->ssid, params->bssid);
++	wiphy_dbg(wiphy, "info: trying to join to %s and bssid %pM\n",
++		  (char *) params->ssid, params->bssid);
+ 
+ 	mwifiex_set_ibss_params(priv, params);
+ 
+diff --git a/drivers/net/wireless/rtlwifi/base.c b/drivers/net/wireless/rtlwifi/base.c
+index d066f74f743..6fc0853fd7f 100644
+--- a/drivers/net/wireless/rtlwifi/base.c
++++ b/drivers/net/wireless/rtlwifi/base.c
+@@ -1392,9 +1392,9 @@ void rtl_watchdog_wq_callback(void *data)
+ 		if (((rtlpriv->link_info.num_rx_inperiod +
+ 		      rtlpriv->link_info.num_tx_inperiod) > 8) ||
+ 		    (rtlpriv->link_info.num_rx_inperiod > 2))
+-			rtlpriv->enter_ps = false;
+-		else
+ 			rtlpriv->enter_ps = true;
++		else
++			rtlpriv->enter_ps = false;
+ 
+ 		/* LeisurePS only work in infra mode. */
+ 		schedule_work(&rtlpriv->works.lps_change_work);
+diff --git a/drivers/net/wireless/rtlwifi/usb.c b/drivers/net/wireless/rtlwifi/usb.c
+index 3fc7d084548..3ad79736b25 100644
+--- a/drivers/net/wireless/rtlwifi/usb.c
++++ b/drivers/net/wireless/rtlwifi/usb.c
+@@ -823,7 +823,6 @@ static void rtl_usb_stop(struct ieee80211_hw *hw)
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
+ 	struct rtl_usb *rtlusb = rtl_usbdev(rtl_usbpriv(hw));
+-	struct urb *urb;
+ 
+ 	/* should after adapter start and interrupt enable. */
+ 	set_hal_stop(rtlhal);
+@@ -831,23 +830,6 @@ static void rtl_usb_stop(struct ieee80211_hw *hw)
+ 	/* Enable software */
+ 	SET_USB_STOP(rtlusb);
+ 	rtl_usb_deinit(hw);
+-
+-	/* free pre-allocated URBs from rtl_usb_start() */
+-	usb_kill_anchored_urbs(&rtlusb->rx_submitted);
+-
+-	tasklet_kill(&rtlusb->rx_work_tasklet);
+-	cancel_work_sync(&rtlpriv->works.lps_change_work);
+-
+-	flush_workqueue(rtlpriv->works.rtl_wq);
+-
+-	skb_queue_purge(&rtlusb->rx_queue);
+-
+-	while ((urb = usb_get_from_anchor(&rtlusb->rx_cleanup_urbs))) {
+-		usb_free_coherent(urb->dev, urb->transfer_buffer_length,
+-				urb->transfer_buffer, urb->transfer_dma);
+-		usb_free_urb(urb);
+-	}
+-
+ 	rtlpriv->cfg->ops->hw_disable(hw);
+ }
+ 
