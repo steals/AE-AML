@@ -13,7 +13,3 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-unicode \
                            HTOP_NCURSES_CONFIG_SCRIPT=ncurses-config"
-
-post_makeinstall_target() {
-  rm -fr $INSTALL/usr/share
-}

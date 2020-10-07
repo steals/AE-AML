@@ -15,3 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --disable-docs \
                            --disable-maintainer-mode \
                            --disable-valgrind"
+
+makeinstall_target() {
+  :
+}
