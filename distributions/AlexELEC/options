@@ -16,7 +16,7 @@
 # Welcome Message for e.g. SSH Server (up to 5 Lines)
   GREETING0="##############################################"
   GREETING1="#                  AlexELEC                  #"
-  GREETING2="#           http://alexelec.in.ua            #"
+  GREETING2="#             http://alexelec.tv             #"
   GREETING3="##############################################"
   GREETING4=""
 
