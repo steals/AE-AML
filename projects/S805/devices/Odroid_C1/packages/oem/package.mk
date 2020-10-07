@@ -23,17 +23,17 @@ PKG_ARCH="any"
 PKG_LICENSE="various"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain rng-tools u-boot-tools htop cmt blop"
+PKG_DEPENDS_TARGET="toolchain rng-tools u-boot-tools cmt blop"
 PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="OEM: Metapackage for various OEM packages"
 PKG_LONGDESC="OEM: Metapackage for various OEM packages"
 
 # tools
-PKG_DEPENDS_TARGET+=" MC ImageMagick scan-m3u htop"
+PKG_DEPENDS_TARGET+=" ImageMagick scan-m3u"
 
 # torrents
-PKG_DEPENDS_TARGET+=" acestream-aml torrserver ptv HTTPAceProxy"
+PKG_DEPENDS_TARGET+=" acestream-aml torrserver tvlink HTTPAceProxy aceproxy"
 
 # tv services
 PKG_DEPENDS_TARGET+=" tvh tvh42"

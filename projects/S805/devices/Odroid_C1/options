@@ -117,7 +117,7 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2 RTL8188EU"
-    ADDITIONAL_DRIVERS="MT7601"
+    ADDITIONAL_DRIVERS="RTL8821CU MT7601"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
@@ -159,4 +159,8 @@
 
    KODI_VENDOR="amlogic-3.14"
 
-   BUILD_ANDROID_BOOTIMG="no"
+   BUILD_ANDROID_BOOTIMG="no
+
+  # build with entware installer
+   ENTWARE_SUPPORT="yes"
+   ENTWARE_ARCH="armv7sf-k3.2""
