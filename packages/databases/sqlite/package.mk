@@ -3,12 +3,12 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="sqlite"
-PKG_VERSION="autoconf-3280000"
-PKG_SHA256="d61b5286f062adfce5125eaf544d495300656908e61fca143517afcc0a89b7c3"
+PKG_VERSION="autoconf-3320300"
+PKG_SHA256="a31507123c1c2e3a210afec19525fd7b5bb1e19a6a34ae5b998fbd7302568b66"
 PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"
-PKG_URL="https://www.sqlite.org/2019/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="gcc:host"
+PKG_URL="https://www.sqlite.org/2020/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="gcc:host ccache:host autoconf:host automake:host"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_LONGDESC="An Embeddable SQL Database Engine."
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
