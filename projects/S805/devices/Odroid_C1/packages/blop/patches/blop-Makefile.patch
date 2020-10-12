@@ -1,0 +1,33 @@
+diff --git a/src/Makefile.am b/src/Makefile.am
+index ca37943..09e86bd 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -3,7 +3,7 @@
+ SUBDIRS = include
+ AM_CPPFLAGS = -I$(ladspa_prefix)/include -Iinclude -I. \
+               -DLOCALEDIR=\"$(datadir)/locale\"
+-LINK = $(COMPILE) -nostartfiles -shared -lc -o $@
++LINK = $(COMPILE) -shared -o $@
+ CLEANFILES = parabola_1649_data.so.c \
+              sawtooth_1641_data.so.c \
+              square_1643_data.so.c
+@@ -33,7 +33,8 @@ wavedatadir = $(ladspa_plugin_dir)/$(wavedata_subdir)
+ noinst_PROGRAMS = wavegen
+ wavegen_SOURCES = wavegen.c wdatutil.c
+ wavegen_DEPENDENCIES = include/wdatutil.h include/common.h
+-wavegen_LINK = $(COMPILE) -lc -lm -o $@
++wavegen_LINK = $(COMPILE) -o $@
++wavegen_LDADD = -lm -L/src/libreelec_build/AE-AML/build.AlexELEC-S805.arm/toolchain/armv7a-libreelec-linux-gnueabi/sysroot/usr/lib
+
+ ## Need to specify sources so that make dist will include them
+ lp4pole_1671_so_SOURCES = lp4pole_1671.so.c lp4pole_filter.c
+@@ -69,6 +69,9 @@ sync_pulse_2023_so_DEPENDENCIES = include/common.h
+ tracker_2025_so_DEPENDENCIES = include/common.h
+ triangle_1649_so_DEPENDENCIES = include/wavedata.h
+ 
++%.c: %.so.c
++	ln -s $*.so.c $*.c
++
+ clean:
+ 	rm -f *.so *.so.o
+ 

@@ -22,13 +22,13 @@ make_host() {
 }
 
 makeinstall_target() {
-  mkdir -p $TOOLCHAIN/include
   mkdir -p $INSTALL/usr/lib/ladspa/include
   cp -r ../plugins/* $INSTALL/usr/lib/ladspa/
-  cp ladspa.h $TOOLCHAIN/include/
 }
 
 makeinstall_host() {
-  mkdir -p $TOOLCHAIN/include
-  cp ladspa.h $TOOLCHAIN/include
+echo "INSTALL HOST"
+mkdir -p $TOOLCHAIN/include
+  #cp ladspa.h $TOOLCHAIN/include
+  cp ladspa.h $TOOLCHAIN/armv7a-libreelec-linux-gnueabi/sysroot/usr/include
 }

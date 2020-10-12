@@ -1,0 +1,501 @@
+diff --git a/src/adsr_1653.so.c b/src/adsr_1653.so.c
+index e3d51e8..48e8ab9 100644
+--- a/src/adsr_1653.so.c
++++ b/src/adsr_1653.so.c
+@@ -278,7 +278,8 @@ runAdsr (LADSPA_Handle instance,
+ 	plugin->samples = samples;
+ }
+ 
+-void _init()
++static void __attribute__ ((constructor))
++_init()
+ {
+ 	char ** port_names;
+ 	LADSPA_PortDescriptor * port_descriptors;
+@@ -385,7 +386,7 @@ void _init()
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini ()
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/adsr_1680.so.c b/src/adsr_1680.so.c
+index e160a7f..1669e32 100644
+--- a/src/adsr_1680.so.c
++++ b/src/adsr_1680.so.c
+@@ -281,7 +281,8 @@ runAdsr (LADSPA_Handle instance,
+ 	plugin->samples = samples;
+ }
+ 
+-void _init()
++static void __attribute__ ((constructor))
++_init()
+ {
+     char **port_names;
+     LADSPA_PortDescriptor *port_descriptors;
+@@ -385,7 +386,8 @@ void _init()
+     }
+ }
+ 
+-void _fini()
++static void __attribute__ ((destructor))
++_fini()
+ {
+     LADSPA_Descriptor * descriptor;
+     int i;
+diff --git a/src/amp_1654.so.c b/src/amp_1654.so.c
+index 2df8614..45a9a68 100644
+--- a/src/amp_1654.so.c
++++ b/src/amp_1654.so.c
+@@ -150,7 +150,7 @@ runAmp_gcia_oa (LADSPA_Handle instance,
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init ()
+ {
+ 	static const char * labels[] = {"amp_gaia_oa",
+@@ -238,7 +238,7 @@ _init ()
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini ()
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/branch_1673.so.c b/src/branch_1673.so.c
+index 0b5e528..7dde3c9 100644
+--- a/src/branch_1673.so.c
++++ b/src/branch_1673.so.c
+@@ -137,7 +137,8 @@ runBranch_ic_ococ (LADSPA_Handle instance,
+ 	output2[0] = input;
+ }
+ 
+-void _init()
++static void __attribute__ ((constructor))
++_init()
+ {
+ 	static const char * labels[] = {"branch_ia_oaoa",
+ 	                                "branch_ic_ococ"};
+@@ -222,7 +223,7 @@ void _init()
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini ()
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/dahdsr_2021.so.c b/src/dahdsr_2021.so.c
+index 9e4467e..0b14188 100644
+--- a/src/dahdsr_2021.so.c
++++ b/src/dahdsr_2021.so.c
+@@ -746,7 +746,7 @@ we received a trigger */
+ 	plugin->samples = samples;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const unsigned long ids[] = {2021, 2022, 2038};
+@@ -895,7 +895,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/difference_2030.so.c b/src/difference_2030.so.c
+index 0c87799..38cdd4f 100644
+--- a/src/difference_2030.so.c
++++ b/src/difference_2030.so.c
+@@ -190,7 +190,7 @@ runDifference_icmc_oc (LADSPA_Handle instance,
+ 	output[0] = input - minus;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"difference_iama_oa",
+@@ -287,7 +287,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/fmod_1656.so.c b/src/fmod_1656.so.c
+index e0ef528..ebbb7ed 100644
+--- a/src/fmod_1656.so.c
++++ b/src/fmod_1656.so.c
+@@ -201,7 +201,7 @@ runFmod_fcmc_oc (LADSPA_Handle instance,
+ 	output[0] = scale * frequency;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"fmod_fama_oa",
+@@ -302,7 +302,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/interpolator_1660.so.c b/src/interpolator_1660.so.c
+index ae560ec..14fd3cb 100644
+--- a/src/interpolator_1660.so.c
++++ b/src/interpolator_1660.so.c
+@@ -154,7 +154,7 @@ runInterpolator (LADSPA_Handle instance,
+ 	plugin->p0 = input;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	char ** port_names;
+@@ -226,7 +226,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor *descriptor;
+diff --git a/src/lp4pole_1671.so.c b/src/lp4pole_1671.so.c
+index 0853a87..6e9de76 100644
+--- a/src/lp4pole_1671.so.c
++++ b/src/lp4pole_1671.so.c
+@@ -197,7 +197,7 @@ runLp4pole_fcrcia_oa (LADSPA_Handle instance,
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"lp4pole_faraia_oa",
+@@ -297,7 +297,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor *descriptor;
+diff --git a/src/product_1668.so.c b/src/product_1668.so.c
+index f9e7e7a..c66ff7a 100644
+--- a/src/product_1668.so.c
++++ b/src/product_1668.so.c
+@@ -163,7 +163,7 @@ runProduct_icic_oc (LADSPA_Handle instance,
+ 	output[0] = input1 * input2;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"product_iaia_oa",
+@@ -254,7 +254,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/pulse_1645.so.c b/src/pulse_1645.so.c
+index 8ecc29e..ebacc4d 100644
+--- a/src/pulse_1645.so.c
++++ b/src/pulse_1645.so.c
+@@ -303,7 +303,7 @@ runPulse_fcpc_oa (LADSPA_Handle instance,
+ 	plugin->phase = phase;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"pulse_fapa_oa",
+@@ -408,7 +408,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/quantiser.so.c b/src/quantiser.so.c
+index 7ed8831..80cf6bc 100644
+--- a/src/quantiser.so.c
++++ b/src/quantiser.so.c
+@@ -544,7 +544,7 @@ runQuantiser_control (LADSPA_Handle instance,
+ 	plugin->last_found = last_found;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ /* !!!! Ensure there is space for possible translations !!!! */
+@@ -679,7 +679,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/random_1661.so.c b/src/random_1661.so.c
+index 71c78b3..8fffdba 100644
+--- a/src/random_1661.so.c
++++ b/src/random_1661.so.c
+@@ -359,7 +359,7 @@ runRandom_fcsc_oa (LADSPA_Handle instance,
+ 	plugin->value2 = value2;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"random_fasa_oa",
+@@ -464,7 +464,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/ratio_2034.so.c b/src/ratio_2034.so.c
+index 523411c..35ce999 100644
+--- a/src/ratio_2034.so.c
++++ b/src/ratio_2034.so.c
+@@ -199,7 +199,7 @@ runRatio_ncdc_oc (LADSPA_Handle instance,
+ 	output[0] = numerator / denominator;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"ratio_nada_oa",
+@@ -296,7 +296,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/sawtooth_1641.so.c b/src/sawtooth_1641.so.c
+index 604377f..e7c44e8 100644
+--- a/src/sawtooth_1641.so.c
++++ b/src/sawtooth_1641.so.c
+@@ -183,7 +183,7 @@ runSawtooth_fc_oa (LADSPA_Handle instance,
+ 	plugin->phase = phase;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"sawtooth_fa_oa",
+@@ -266,7 +266,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/sequencer.so.c b/src/sequencer.so.c
+index 78db28d..2630920 100644
+--- a/src/sequencer.so.c
++++ b/src/sequencer.so.c
+@@ -226,7 +226,7 @@ runSequencer (LADSPA_Handle instance,
+ 	plugin->step_index = step_index;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ /* !!!! Ensure there is space for possible translations !!!! */
+@@ -342,7 +342,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/square_1643.so.c b/src/square_1643.so.c
+index cb4fd6a..c0e2b01 100644
+--- a/src/square_1643.so.c
++++ b/src/square_1643.so.c
+@@ -185,7 +185,7 @@ runSquare_fc_oa (LADSPA_Handle instance,
+ 	plugin->phase = phase;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"square_fa_oa",
+@@ -268,7 +268,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/sum_1665.so.c b/src/sum_1665.so.c
+index 3265bf8..8907415 100644
+--- a/src/sum_1665.so.c
++++ b/src/sum_1665.so.c
+@@ -163,7 +163,7 @@ runSum_icic_oc (LADSPA_Handle instance,
+ 	output[0] = input1 + input2;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"sum_iaia_oa",
+@@ -254,7 +254,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/sync_pulse_2023.so.c b/src/sync_pulse_2023.so.c
+index 2ea9d59..8af3104 100644
+--- a/src/sync_pulse_2023.so.c
++++ b/src/sync_pulse_2023.so.c
+@@ -223,7 +223,7 @@ runSyncPulse_fcpcga_oa (LADSPA_Handle instance,
+ 	plugin->phase = phase;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"syncpulse_fapaga_oa",
+@@ -321,7 +321,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/sync_square_1678.so.c b/src/sync_square_1678.so.c
+index 9255cd5..9c96e93 100644
+--- a/src/sync_square_1678.so.c
++++ b/src/sync_square_1678.so.c
+@@ -208,7 +208,7 @@ runSyncSquare_fcga_oa (LADSPA_Handle instance,
+ 	plugin->phase = phase;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"syncsquare_faga_oa",
+@@ -297,7 +297,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/tracker_2025.so.c b/src/tracker_2025.so.c
+index 2342dc3..3341996 100644
+--- a/src/tracker_2025.so.c
++++ b/src/tracker_2025.so.c
+@@ -234,7 +234,7 @@ runTracker_gaacdcia_oa (LADSPA_Handle instance,
+ 	plugin->last_value = last_value;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"tracker_gaaadaia_oa",
+@@ -364,7 +364,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/triangle_1649.so.c b/src/triangle_1649.so.c
+index b3c6386..5950f29 100644
+--- a/src/triangle_1649.so.c
++++ b/src/triangle_1649.so.c
+@@ -322,7 +322,7 @@ runTriangle_fcsc_oa (LADSPA_Handle instance,
+ 	plugin->phase = phase;
+ }
+ 
+-void
++static void __attribute__ ((constructor))
+ _init (void)
+ {
+ 	static const char * labels[] = {"triangle_fasa_oa",
+@@ -427,7 +427,7 @@ _init (void)
+ 	}
+ }
+ 
+-void
++static void __attribute__ ((destructor))
+ _fini (void)
+ {
+ 	LADSPA_Descriptor * descriptor;
+diff --git a/src/wdatutil.c b/src/wdatutil.c
+index 84f262b..9ee6261 100644
+--- a/src/wdatutil.c
++++ b/src/wdatutil.c
+@@ -411,7 +411,7 @@ wavedata_write (Wavedata * w,
+  * _init()
+  * Assemble tables and lookup
+  */
+-	fprintf (wdat_fp, "void\n");
++	fprintf (wdat_fp, "static void __attribute__ ((constructor))\n");
+ 	fprintf (wdat_fp, "_init (void)\n");
+ 	fprintf (wdat_fp, "{\n");
+ 	fprintf (wdat_fp, "\tunsigned long max_harmonic;\n");

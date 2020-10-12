@@ -9,17 +9,16 @@ PKG_SITE="http://blop.sourceforge.net/"
 PKG_URL="https://downloads.sourceforge.net/sourceforge/project/blop/blop/0.2/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain alsa-lib ladspa-sdk:host"
 PKG_LONGDESC="Bandlimited oscillator plugins for LADSPA-aware audio applications"
-PKG_AUTORECONG="yes"
 PKG_TOOLCHAIN="configure"
 
 #PKG_CONFIGURE_OPTS_TARGET="--prefix=$SYSROOT_PREFIX/usr --with-ladspa-prefix=$SYSROOT_PREFIX/usr --with-ladspa-plugin-dir=/usr/lib/ladspa"
 
 pre_configure_target() {
- export CFLAGS="$CFLAGS -DNO_DEBUG -fPIC -DPIC" 
+ export CFLAGS="$CFLAGS -DNO_DEBUG -fPIC -DPIC"
  cd $PKG_BUILD
 }
 
 configure_target() {
- ./configure --host="armv7a-libreelec-linux-gnueabi" --build="x86_64-linux-gnu" --prefix="$SYSROOT_PREFIX/usr" --disable-static --enable-shared --with-ladspa-prefix="$SYSROOT_PREFIX/usr" --with-ladspa-plugin-dir="/usr/lib/ladspa"
+ do_autoreconf
+ ./configure --host=$TARGET_NAME --build=$HOST_NAME --prefix="$SYSROOT_PREFIX/usr" --with-ladspa-prefix="$SYSROOT_PREFIX/usr" --with-ladspa-plugin-dir="/usr/lib/ladspa"
 }
-
