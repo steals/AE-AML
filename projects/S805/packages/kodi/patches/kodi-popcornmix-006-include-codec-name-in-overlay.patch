@@ -60,6 +60,28 @@ index 5a4cfa7cac95..20a77b48b5da 100644
  
    return s.str();
  }
+diff --git a/xbmc/cores/VideoPlayer/VideoRenderers/DebugRenderer.cpp b/xbmc/cores/VideoPlayer/VideoRenderers/DebugRenderer.cpp
+index b324e3a..7689597 100644
+--- a/xbmc/cores/VideoPlayer/VideoRenderers/DebugRenderer.cpp
++++ b/xbmc/cores/VideoPlayer/VideoRenderers/DebugRenderer.cpp
+@@ -96,7 +96,7 @@ void CDebugRenderer::CRenderer::Render(int idx)
+ {
+   std::vector<COverlay*> render;
+   std::vector<SElement>& list = m_buffers[idx];
+-  float posY = 0.0f;
++  float posY = 200.0f;
+   for (std::vector<SElement>::iterator it = list.begin(); it != list.end(); ++it)
+   {
+     COverlay* o = nullptr;
+@@ -109,7 +109,7 @@
+ 
+     COverlayText *text = dynamic_cast<COverlayText*>(o);
+     if (text)
+-      text->PrepareRender("arial.ttf", 1, 16, 0, m_font, m_fontBorder, UTILS::COLOR::NONE, m_rv);
++      text->PrepareRender("teletext.ttf", 1, 12, 0, m_font, m_fontBorder, UTILS::COLOR::NONE, m_rv);
+ 
+     RESOLUTION_INFO res = CServiceBroker::GetWinSystem()->GetGfxContext().GetResInfo(CServiceBroker::GetWinSystem()->GetGfxContext().GetVideoResolution());
+ 
 diff --git a/xbmc/cores/omxplayer/OMXPlayerVideo.cpp b/xbmc/cores/omxplayer/OMXPlayerVideo.cpp
 index b4f0f8699c03..7f5ff1ecae45 100644
 --- a/xbmc/cores/omxplayer/OMXPlayerVideo.cpp
