@@ -1,7 +1,0 @@
-<advancedsettings>
-  <splash>false</splash>
-  <remotedelay>1</remotedelay>
-  <samba>
-    <clienttimeout>30</clienttimeout>
-  </samba>
-</advancedsettings>
