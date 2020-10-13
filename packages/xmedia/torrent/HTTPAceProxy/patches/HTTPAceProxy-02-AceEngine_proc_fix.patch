@@ -1,0 +1,23 @@
+diff --git a/acehttp.py b/acehttp.py
+index 74d9727..38da4b9 100755
+--- a/acehttp.py
++++ b/acehttp.py
+@@ -493,7 +493,7 @@ if AceConfig.osplatform != 'Windows' and AceConfig.aceproxyuser and os.getuid()
+ AceProxy.pool = Pool()
+ AceProxy.clientcounter = ClientCounter()
+ #### AceEngine startup
+-AceProxy.ace = findProcess('ace_engine.exe' if AceConfig.osplatform == 'Windows' else os.path.basename(AceConfig.acecmd))
++AceProxy.ace = findProcess('acestream.start')
+ if not AceProxy.ace and AceConfig.acespawn:
+    if spawnAce():
+       logger.info('Local AceStream engine spawned with pid %s' % AceProxy.ace.pid)
+@@ -505,9 +505,6 @@ elif AceProxy.ace:
+ # If AceEngine started (found) localy
+ if AceProxy.ace:
+    AceConfig.ace['aceHostIP'] = '127.0.0.1'
+-   # Refreshes the acestream.port file for OS Windows.....
+-   if AceConfig.osplatform == 'Windows': detectPort()
+-   else: gevent.sleep(AceConfig.acestartuptimeout)
+ else:
+    url = 'http://{aceHostIP}:{aceHTTPport}/webui/api/service'.format(**AceConfig.ace)
+    params = {'method': 'get_version', 'format': 'json', 'callback': 'mycallback'}
