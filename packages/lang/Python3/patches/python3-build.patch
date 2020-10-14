@@ -1,0 +1,13 @@
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index 2d2e11f..2d70309 100644
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -716,7 +716,7 @@ Modules/Setup: $(srcdir)/Modules/Setup.dist
+ 	fi
+ 
+ Programs/_testembed: Programs/_testembed.o $(LIBRARY) $(LDLIBRARY) $(PY3LIBRARY)
+-	$(LINKCC) $(PY_CORE_LDFLAGS) $(LINKFORSHARED) -o $@ Programs/_testembed.o $(BLDLIBRARY) $(LIBS) $(MODLIBS) $(SYSLIBS) $(LDLAST)
++	$(LINKCC) -L. $(PY_CORE_LDFLAGS) $(LINKFORSHARED) -o $@ Programs/_testembed.o $(BLDLIBRARY) $(LIBS) $(MODLIBS) $(SYSLIBS) $(LDLAST)
+ 
+ ############################################################################
+ # Importlib

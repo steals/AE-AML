@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2017-2018 Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="Python3"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="3.7.1"
-PKG_SHA256="fa7e2b8e8c9402f192ad56dc4f814089d1c4466c97d780f5e5acc02c04243d6d"
+PKG_VERSION="3.7.3"
+PKG_SHA256="da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python3:host readline ncurses"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python3:host readline ncurses"
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 
 PKG_PYTHON_VERSION=python3.7
@@ -80,6 +81,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --without-ensurepip
                            --with-threads
                            --enable-ipv6
+                           CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include
 "
 
 post_unpack() {
