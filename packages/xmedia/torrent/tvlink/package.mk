@@ -6,7 +6,7 @@ PKG_VERSION="latest"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AlexELEC/TVLINK-aml"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain vlc Python2 requests pycryptodome pycountry pyisodate pysocks pywebsocket"
+PKG_DEPENDS_TARGET="toolchain vlc Python2 requests pycryptodome pycountry pyisodate pysocks pywebsocket pysix"
 PKG_LONGDESC="TVLink: IPTV channel aggregator."
 PKG_TOOLCHAIN="manual"
 
